@@ -10,7 +10,7 @@ module MyFavoriteConvenienceStoreSDesserts
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-    config.generator do |g|
+    config.generators do |g|
       g.test_framework :rspec,
             view_specs: false,
             helper_specs: false,
