@@ -10,6 +10,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav>
+        <% if user_signed_in? %>
+          Logged in as <strong><%= current_user.email %></strong>.
+          <%= link_to 'プロフィール変更', edit_user_registration_path %>
+          <%= link_to 'ログアウト', sign_out_path %>
+        <% else %>
+          <%= link_to 'サインイン', new_user_registration_path %>
+          <%= link_to 'ログイン', new_user_session_path %>
+        <% end %>
+      </nav>
+    </header>
+
+    <div>
+      <p class='notice'><%= notice %></p>
+      <p class='alert'><%= alert %></p>
+    </div>
+
+    <div class='container'>
+      <%= yield %>
+    </div>
   </body>
 </html>
