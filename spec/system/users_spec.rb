@@ -40,8 +40,8 @@ RSpec.describe 'ログインとログアウト', type: :system do
   end
 end
 
-RSpec.describe 'サインイン', type: :system do
-  it '有効な入力でサインインに成功する' do
+RSpec.describe 'サインアップ', type: :system do
+  it '有効な入力でサインアップに成功する' do
     visit new_user_registration_path
     expect {
       fill_in 'メールアドレス', with: 'test@example.com'
@@ -50,4 +50,6 @@ RSpec.describe 'サインイン', type: :system do
       click_button 'サインアップ'
   }.to change(User, :count).by(1)
   end
+
+  it '重複したメールアドレスでサインアップに失敗する'
 end
