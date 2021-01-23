@@ -2,10 +2,15 @@
   "name": "My_favorite_convenience_store_s_desserts",
   "private": true,
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
