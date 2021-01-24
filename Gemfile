@@ -64,4 +64,3 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 
 gem 'pg'
-gem "tailwindcss-rails", "~> 0.3.1"
