@@ -64,5 +64,5 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 
 gem 'pg'
-gem 'bootstrap', '~> 4.1.1'
+gem 'bootstrap'
 gem 'jquery-rails'
