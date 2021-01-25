@@ -7,7 +7,7 @@
       <label for="file">画像</label>
       <div id="file" class="input-group">
         <div class="custom-file">
-          <%= f.file_field :post_image, type: 'file', id: 'cutomfile', class: 'custom-file-input', name: 'cutomfile[]' %>
+          <%= f.file_field :post_image, id: 'cutomfile', class: 'custom-file-input', name: 'cutomfile[]' %>
           <label class="custom-file-label" for="customfile" data-browse="参照">ファイル選択...</label>
         </div>
         <div class="input-group-append">
@@ -24,37 +24,36 @@
     </div>
   <% end %>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script>
-  $('.custom-file-input').on('change', handleFileSelect);
-  function handleFileSelect(evt) {
-      $('#preview').remove();// 繰り返し実行時の処理
-      $(this).parents('.input-group').before('<div id="preview"></div>');
+  $(document).on('turbolinks:load', function(){
+    $('.custom-file-input').on('change', handleFileSelect);
+    function handleFileSelect(evt) {
+        $('#preview').remove();// 繰り返し実行時の処理
+        $(this).parents('.input-group').before('<div id="preview"></div>');
 
-    var files = evt.target.files;
+        var file = evt.target.files[0];
+        var reader = new FileReader();
 
-    for (var i = 0, f; f = files[i]; i++) {
+        reader.onload = (function(theFile) {
+          return function(e) {
+            if (theFile.type.match('image.*')) {
+              var $html = ['<div class="d-inline-block mr-1 mt-1"><img class="img-thumbnail" src="', e.target.result,'" title="', escape(theFile.name), '" style="height:400px;" /><div class="small text-muted text-center">', escape(theFile.name),'</div></div>'].join('');// 画像のプレビューとファイル名の表示
+            }
+            $('#preview').append($html);
+          };
+        })(file);
 
-      var reader = new FileReader();
+        reader.readAsDataURL(file);
+      }
+      $(this).next('.custom-file-label').html(+ files.length + '個のファイルを選択しました');
 
-      reader.onload = (function(theFile) {
-        return function(e) {
-          if (theFile.type.match('image.*')) {
-            var $html = ['<div class="d-inline-block mr-1 mt-1"><img class="img-thumbnail" src="', e.target.result,'" title="', escape(theFile.name), '" style="height:400px;" /><div class="small text-muted text-center">', escape(theFile.name),'</div></div>'].join('');// 画像では画像のプレビューとファイル名の表示
-          }
-          $('#preview').append($html);
-        };
-      })(f);
 
-      reader.readAsDataURL(f);
-    }
-    $(this).next('.custom-file-label').html(+ files.length + '個のファイルを選択しました');
-  }
-
-  //ファイルの取消
-  $('.reset').click(function(){
-    $(this).parent().prev().children('.custom-file-label').html('ファイル選択...');
-    $('#preview').remove();
-    $('.custom-file-input').val('');
-  })
+    //ファイルの取消
+    $('.reset').click(function(){
+      $(this).parent().prev().children('.custom-file-label').html('ファイル選択...');
+      $('#preview').remove();
+      $('.custom-file-input').val('');
+    })
+  });
 </script>
