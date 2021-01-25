@@ -4,11 +4,16 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by(id: params[:id])
   end
 
   def create
     @post = current_user.posts.new(post_params)
+    if @post.save
+      redirect_to post_url(@post)
+    else
+      render :new
+    end
   end
 
   def update
