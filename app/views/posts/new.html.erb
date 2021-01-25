@@ -1,0 +1,59 @@
+<h1>Posts#new</h1>
+<p>Find me in app/views/posts/new.html.erb</p>
+
+<div class='mt-3'>
+  <%= form_with model: @post, local: true do |f| %>
+    <div class="form-group">
+      <label for="file">画像</label>
+      <div id="file" class="input-group">
+        <div class="custom-file">
+          <%= f.file_field :post_image, id: 'cutomfile', class: 'custom-file-input', name: 'cutomfile[]' %>
+          <label class="custom-file-label" for="customfile" data-browse="参照">ファイル選択...</label>
+        </div>
+        <div class="input-group-append">
+          <button type="button" class="btn btn-outline-secondary reset">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :post_body, 'ひとこと' %>
+      <%= f.text_area :post_body, class: 'form-control' %>
+    </div>
+    <div class="nav justify-content-end mt-3">
+      <%= f.submit '送信', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  $(document).on('turbolinks:load', function(){
+    $('.custom-file-input').on('change', handleFileSelect);
+    function handleFileSelect(evt) {
+        $('#preview').remove();// 繰り返し実行時の処理
+        $(this).parents('.input-group').before('<div id="preview"></div>');
+
+        var file = evt.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = (function(theFile) {
+          return function(e) {
+            if (theFile.type.match('image.*')) {
+              var $html = ['<div class="d-inline-block mr-1 mt-1"><img class="img-thumbnail" src="', e.target.result,'" title="', escape(theFile.name), '" style="height:400px;" /><div class="small text-muted text-center">', escape(theFile.name),'</div></div>'].join('');// 画像のプレビューとファイル名の表示
+            }
+            $('#preview').append($html);
+          };
+        })(file);
+
+        reader.readAsDataURL(file);
+      }
+      $(this).next('.custom-file-label').html(+ files.length + '個のファイルを選択しました');
+
+
+    //ファイルの取消
+    $('.reset').click(function(){
+      $(this).parent().prev().children('.custom-file-label').html('ファイル選択...');
+      $('#preview').remove();
+      $('.custom-file-input').val('');
+    })
+  });
+</script>
