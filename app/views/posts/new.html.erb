@@ -8,8 +8,8 @@
     <label for="file">画像</label>
     <div id="file" class="input-group">
       <div class="custom-file">
-        <%= f.file_field :post_image, id: 'post_post_image',
-                            class: 'custom-file-input', name: 'post[post_image]' %>
+        <%= f.file_field :image, id: 'post_image',
+                            class: 'custom-file-input', name: 'post[image]' %>
         <label class="custom-file-label" for="post_post_image" data-browse="参照">ファイル選択...</label>
       </div>
       <div class="input-group-append">
@@ -18,11 +18,11 @@
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :post_body, 'ひとこと' %>
-    <%= f.text_area :post_body, class: 'form-control' %>
+    <%= f.label :body, 'ひとこと' %>
+    <%= f.text_area :body, class: 'form-control' %>
   </div>
   <div class="nav justify-content-end mt-3">
-    <%= f.submit '送信', id: 'post-form', class: 'btn btn-primary' %>
+    <%= f.submit '送信', class: 'btn btn-primary' %>
   </div>
 </div>
 <% end %>
