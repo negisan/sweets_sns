@@ -66,3 +66,4 @@ gem 'devise-i18n-views'
 gem 'pg'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem "mini_magick"
