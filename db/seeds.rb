@@ -10,10 +10,11 @@ User.find_or_create_by(email: 'test@example.com') do |user|
   user.name = "tony",
   user.password = "password"
 end
-
-post = Post.create!(
-  user_id: 1,
-  body: 'First post'
-  )
-post.image.attach(io: File.open(Rails.root.join("app/assets/images/sample.jpg")),
-                  filename: 'sample.jpg')
+4.times do |i|
+  post = Post.create!(
+    user_id: 1,
+    body: "post No#{i}"
+    )
+  post.image.attach(io: File.open(Rails.root.join("app/assets/images/sample.jpg")),
+                    filename: 'sample.jpg')
+end
