@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.find_or_create_by(email: 'test@example.com') do |user|
-  user.name = "tony",
+  user.name = "tony"
   user.password = "password"
 end
 4.times do |i|
