@@ -16,4 +16,4 @@ post = Post.create!(
   body: 'First post'
   )
 post.image.attach(io: File.open(Rails.root.join("app/assets/images/sample.jpg")),
-                  filename: 'sample..jpg')
+                  filename: 'sample.jpg')
