@@ -10,7 +10,7 @@
       <div class="custom-file">
         <%= f.file_field :image, id: 'post_image',
                             class: 'custom-file-input', name: 'post[image]' %>
-        <label class="custom-file-label" for="post_post_image" data-browse="参照">ファイル選択...</label>
+        <label class="custom-file-label" for="post_image" data-browse="参照">ファイル選択...</label>
       </div>
       <div class="input-group-append">
         <button type="button" class="btn btn-outline-secondary reset">取消</button>
@@ -50,9 +50,9 @@ $(document).on('turbolinks:load', function(){
       };
     })(file);
     reader.readAsDataURL(file);
-  }
-  $(this).next('.custom-file-label').html(+ files.length + '個のファイルを選択しました');
 
+    $(this).next('.custom-file-label').html(+ evt.target.files.length + '個のファイルを選択しました');
+  }
   //ファイルの取消
   $('.reset').click(function(){
     $(this).parent().prev().children('.custom-file-label').html('ファイル選択...');
