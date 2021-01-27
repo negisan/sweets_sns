@@ -12,7 +12,7 @@ RSpec.describe 'postsのテンプレートの表示', type: :system do
   end
 
 
-  descrice 'ログインしているユーザー' do
+  describe 'ログインしているユーザー' do
     describe "posts/new" do
       it "newページへアクセスできる"
 
