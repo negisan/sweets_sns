@@ -4,9 +4,11 @@
 <div class="card-deck">
 <% @posts.each do |post| %>
   <div class="card">
-    <%= link_to post_path(post), target: "_blank" do %>
-      <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
-              class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+    <% if post.image.attached? %>
+      <%= link_to post_path(post), target: "_blank" do %>
+        <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+      <% end %>
     <% end %>
     <div class="card-body">
       <p class="card-text"><%= post.body %></p>
