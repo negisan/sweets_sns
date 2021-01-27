@@ -4,6 +4,17 @@
 
 <div class="card" style="width: 100%;">
   <%= image_tag @post.image.variant(resize: '1024x1024').processed, class: 'card-img-top', alt: '' %>
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills">
+      <li class="nav-item">
+        <%= link_to '編集', edit_post_path(@post), class: 'nav-link text-secondary' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to '削除', post_path(@post), method: :delete,
+            class: 'nav-link text-danger', data: { confirm: '本当に削除してもよろしいですか？' } %>
+      </li>
+    </ul>
+  </div>
   <div class="card-body">
     <p class="card-text"><%= @post.body %></p>
     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -11,8 +22,9 @@
       <a href="#" class="btn btn-outline-danger">♡</a>
     </div>
   </div>
-
-  <div>
-    <!--コメント欄-->
-  </div>
 </div>
+
+<div class="card text-center p-5 mt-3">
+  <p>コメント欄</p>
+</div>
+
