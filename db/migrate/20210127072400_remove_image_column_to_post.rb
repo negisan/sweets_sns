@@ -1,4 +1,4 @@
-class RemoveImageColumnToPosts < ActiveRecord::Migration[6.0]
+class RemoveImageColumnToPost < ActiveRecord::Migration[6.0]
   def up
     remove_column :posts, :image, :string
   end

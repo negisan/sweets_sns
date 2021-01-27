@@ -1,26 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe 'postsのテンプレートの表示', type: :system do
-  describe "posts/new" do
-    it "ログイン済みのユーザーがnewページへアクセスできる" do
+  describe 'ログインしていないユーザー' do
+    describe 'posts/show' do
+      it "showページにアクセスできる"
     end
 
-    it "ログインしていないユーザーはnewページへアクセスできない"
+    describe 'posts/new' do
+      it "ログインしていないユーザーはnewページへアクセスできない"
+    end
   end
 
-  describe "posts/show" do
-    it "全ユーザーがshowページにアクセスできる" do
+
+  descrice 'ログインしているユーザー' do
+    describe "posts/new" do
+      it "newページへアクセスできる"
+
     end
 
-    it "画像が表示される"
+    describe "posts/show" do
 
-    it 'postを作成したユーザーと現在のユーザーが一致したら、編集リンクが表示される'
+      it 'showページにアクセスできる'
 
-    it 'postを作成したユーザーと現在のユーザーが一致したら、削除リンクが表示される'
+      it "画像が表示される"
 
-    it 'postを作成したユーザーと現在のユーザーが一致しない場合、編集リンクが表示されない'
+      it 'postを作成したユーザーと現在のユーザーが一致したら、編集リンクが表示される'
 
-    it 'postを作成したユーザーと現在のユーザーが一致しない場合、削除リンクが表示されない'
+      it 'postを作成したユーザーと現在のユーザーが一致したら、削除リンクが表示される'
 
+      it 'postを作成したユーザーと現在のユーザーが一致しない場合、編集リンクが表示されない'
+
+      it 'postを作成したユーザーと現在のユーザーが一致しない場合、削除リンクが表示されない'
+
+    end
   end
+
+
 end
