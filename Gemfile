@@ -70,3 +70,4 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem "mini_magick"
 gem 'activestorage-validator'
+gem 'image_processing', '~> 1.2'

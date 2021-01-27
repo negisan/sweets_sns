@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'ログインとログアウト', type: :system do
-  before do
-    @user = User.create!(email: 'test@example.com', password: 'password')
-  end
+
+  let!(:user) { User.create(
+    email: 'test@example.com',
+    password: 'password'
+  )}
+
 
   it '有効な入力でログインできる' do
     visit new_user_session_path
