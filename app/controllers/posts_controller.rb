@@ -31,7 +31,7 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def destroy
     @post.destroy!
-    redirect_to post_url, flash: {notice: "投稿を削除しました"}
+    redirect_to root_url, flash: {notice: "投稿を削除しました"}
   end
 
   private
