@@ -3,7 +3,7 @@
 
 
 <div class="card" style="width: 100%;">
-  <%= image_tag @post.image.variant(resize: '1080x1080').processed, class: 'card-img-top', alt: '' %>
+  <%= image_tag @post.image.variant(resize: '1080x1080').processed, class: 'card-img-top', alt: "#{@post.image.filename}" %>
   <div class="card-header">
     <% if user_signed_in? && @post.user_id == current_user.id %>
       <ul class="nav nav-pills card-header-pills justify-content-end">
