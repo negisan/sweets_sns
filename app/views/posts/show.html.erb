@@ -5,15 +5,17 @@
 <div class="card" style="width: 100%;">
   <%= image_tag @post.image.variant(resize: '1024x1024').processed, class: 'card-img-top', alt: '' %>
   <div class="card-header">
-    <ul class="nav nav-pills card-header-pills">
-      <li class="nav-item">
-        <%= link_to '編集', edit_post_path(@post), class: 'nav-link text-secondary' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to '削除', post_path(@post), method: :delete,
-            class: 'nav-link text-danger', data: { confirm: '本当に削除してもよろしいですか？' } %>
-      </li>
-    </ul>
+    <% if @post.user_id == current_user.id %>
+      <ul class="nav nav-pills card-header-pills justify-content-end">
+        <li class="nav-item">
+          <%= link_to '編集', edit_post_path(@post), class: 'nav-link text-secondary' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to '削除', post_path(@post), method: :delete,
+              class: 'nav-link text-danger', data: { confirm: '本当に削除してもよろしいですか？' } %>
+        </li>
+      </ul>
+    <% end %>
   </div>
   <div class="card-body">
     <p class="card-text"><%= @post.body %></p>
