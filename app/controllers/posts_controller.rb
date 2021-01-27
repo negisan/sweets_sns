@@ -12,7 +12,7 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   def create
     @post = current_user.posts.new(post_params)
     if @post.save
-      redirect_to post_url(@post)
+      redirect_to root_url, flash: {notice: "投稿しました"}
     else
       render :new
     end
@@ -22,9 +22,16 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   end
 
   def update
+    if @post.update(post_params)
+      redirect_to post_url(@post), flash: {notice: "投稿を更新しました"}
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @post.destroy!
+    redirect_to post_url, flash: {notice: "投稿を削除しました"}
   end
 
   private
