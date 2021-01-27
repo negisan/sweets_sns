@@ -35,7 +35,10 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   #テストでDeviseのヘルパーを使う
-  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include ControllerMacros, type: :controller
 
   #FactoryBotのメソッドを使う
   config.include FactoryBot::Syntax::Methods
@@ -78,5 +81,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+require 'devise'
+require File.expand_path("spec/support/controller_macros.rb")
 
 require 'capybara/rspec'

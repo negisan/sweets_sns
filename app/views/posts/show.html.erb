@@ -1,11 +1,11 @@
-<h1>Posts#show</h1>
+<h1>投稿詳細</h1>
 <p>Find me in app/views/posts/show.html.erb</p>
 
 
 <div class="card" style="width: 100%;">
-  <%= image_tag @post.image.variant(resize: '1024x1024').processed, class: 'card-img-top', alt: '' %>
+  <%= image_tag @post.image.variant(resize: '1080x1080').processed, class: 'card-img-top', alt: "#{@post.image.filename}" %>
   <div class="card-header">
-    <% if @post.user_id == current_user.id %>
+    <% if user_signed_in? && @post.user_id == current_user.id %>
       <ul class="nav nav-pills card-header-pills justify-content-end">
         <li class="nav-item">
           <%= link_to '編集', edit_post_path(@post), class: 'nav-link text-secondary' %>
@@ -18,7 +18,7 @@
     <% end %>
   </div>
   <div class="card-body">
-    <p class="card-text"><%= @post.body %></p>
+    <p class="card-text"><%= simple_format(@post.body) %></p>
     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
     <div class="nav justify-content-end">
       <a href="#" class="btn btn-outline-danger">♡</a>
