@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'ログインしていないユーザー', type: :system do
+  let(:user) { FactoryBot.create(:user) }
+  let!(:post) { FactoryBot.create(:post, user_id: user.id) }
+
+
+
   describe 'テンプレートの表示' do
-    let(:user) { FactoryBot.create(:user) }
-    let!(:post) { FactoryBot.create(:post, user_id: user.id) }
 
     describe 'posts/show' do
       it "showページにアクセスできる" do
@@ -21,7 +24,12 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
         expect(page).to_not have_selector 'a', text: '削除'
       end
     end
+  end
 
+
+
+
+  describe '投稿機能' do
     it "newページへアクセスできない" do
       visit post_path(post)
       expect(page).to_not have_content '投稿の新規作成'
@@ -31,7 +39,37 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       visit edit_post_path(post)
       expect(page).to_not have_content '投稿の編集'
     end
+  end
 
+
+
+
+  describe 'Like機能' do
+    describe 'Home' do
+      it "Likeボタンが表示される" do
+        visit root_path
+        expect(page).to have_selector 'a', id: 'like_btn'
+      end
+
+      it "Likeボタンを押すとログインページへ遷移する" do
+        visit root_path
+        find('#like_btn').click
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    describe 'posts/show' do
+      it "Likeボタンが表示される" do
+        visit post_path(post)
+        expect(page).to have_selector 'a', id: 'like_btn'
+      end
+
+      it "Likeボタンを押すとログインページへ遷移する" do
+        visit post_path(post)
+        find('#like_btn').click
+        expect(page).to have_content 'ログイン'
+      end
+    end
   end
 end
 
@@ -102,6 +140,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
 
 
+
   describe '投稿機能' do
     describe 'posts/new' do
       before do
@@ -165,6 +204,54 @@ RSpec.describe 'ログインしているユーザー', type: :system do
     end
   end
 
+
+
+
+  describe 'Like機能' do
+    describe 'posts/show' do
+      it "Likeボタンが表示される" do
+        visit post_path(post)
+        expect(page).to have_selector 'a', id: 'like_btn'
+      end
+
+      it "Likeボタンを押すとLike済になる" do
+        visit post_path(post)
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.fas'
+      end
+
+      it "Like済のボタンを押すとLikeが解除される" do
+        visit post_path(post)
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.fas'
+        sleep 1
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.far'
+      end
+    end
+
+    describe 'home' do
+      it "Likeボタンが表示される" do
+        visit root_path
+        expect(page).to have_selector 'a', id: 'like_btn'
+      end
+
+      it "Likeボタンを押すとLike済になる" do
+        visit root_path
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.fas'
+      end
+
+      it "Like済のボタンを押すとLikeが解除される" do
+        visit root_path
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.fas'
+        sleep 1
+        find('.fas').click
+        expect(find('#like_btn')).to_not have_css '.fas'
+      end
+    end
+  end
 end
 
 
