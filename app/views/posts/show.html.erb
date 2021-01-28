@@ -22,6 +22,7 @@
     <% if @post.body %>
       <div class="my-5">
         <p class="card-text"><%= simple_format(@post.body) %></p>
+        <hr size="20" noshad>
       </div>
     <% end %>
     <div id="likes_buttons_<%= @post.id %>">
@@ -29,7 +30,14 @@
     </div>
     <p class="card-text"><small class="text-muted">投稿日時：<%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
   </div>
+  <div class="card-footer">
+  <!--TODOプロフ画像で置き換え-->
+    <div class="my-1">
+      <%= link_to "#{@post.user.name}のプロフィールページ", user_path(@post.user), class: 'text-secondary' %>
+    </div>
+  </div>
 </div>
+
 
 <div class="card text-center p-5 mt-3">
   <p>コメント欄</p>

@@ -15,7 +15,8 @@ module MyFavoriteConvenienceStoreSDesserts
             view_specs: false,
             helper_specs: false,
             controller_specs: false,
-            routing_specs: false
+            routing_specs: false,
+            requset_specs: false
     end
 
     config.i18n.default_locale = :ja

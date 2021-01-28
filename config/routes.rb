@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get 'sign_out', :to => 'users/sessions#destroy'
   end
 
+  resources :users, only: [:show]
+
   get 'home/index'
 
   root to: 'home#index'
