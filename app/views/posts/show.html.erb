@@ -18,16 +18,20 @@
       </ul>
     <% end %>
   </div>
-  <div class="card-body">
+  <div class="card-body px-5">
     <p class="card-text"><%= simple_format(@post.body) %></p>
     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    <div class="nav justify-content-end">
-      <a href="#" class="btn btn-outline-danger">♡</a>
+
+
+    <div id="likes_buttons_<%= @post.id %>">
+      <%= render partial: 'likes/like', locals: {post: @post} %>
     </div>
+
+
+
   </div>
 </div>
 
 <div class="card text-center p-5 mt-3">
   <p>コメント欄</p>
 </div>
-

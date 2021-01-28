@@ -37,7 +37,7 @@
 <% end %>
 
 <script>
-$(document).on('turbolinks:load', function(){
+
   $('.custom-file-input').on('change', handleFileSelect);
   function handleFileSelect(evt) {
     // 繰り返し実行時の処理
@@ -69,5 +69,5 @@ $(document).on('turbolinks:load', function(){
     $('#preview').remove();
     $('.custom-file-input').val('');
   })
-});
+
 </script>

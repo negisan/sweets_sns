@@ -3,6 +3,7 @@
     <%= link_to 'Home', root_url, class: 'navbar-brand' %>
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
+      <!--TODOプロフィールへのリンク-->
       <li class="nav-item"><%= link_to current_user.name, class: 'nav-link' %></li>
       <li class="nav-item"><%= link_to 'ログアウト', sign_out_path, class: 'nav-link' %></li>
       <% else %>

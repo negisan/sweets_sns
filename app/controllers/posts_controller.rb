@@ -7,6 +7,7 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   end
 
   def show
+    @like = Like.new
   end
 
   def create
