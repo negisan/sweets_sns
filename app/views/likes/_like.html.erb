@@ -1,18 +1,18 @@
 <% if user_signed_in? %>
   <% if current_user.already_liked?(post) %>
     <div class="nav justify-content-end">
-      <%= link_to post_like_path(post.id), method: :delete,
+      <%= link_to post_like_path(post, id: post.id), method: :delete,
               remote: true, class: 'btn btn-outline-danger' do %>
           <i class="fas fa-heart"></i>
       <% end %>
     </div>
   <% else %>
     <div class="nav justify-content-end">
-      <%= link_to post_likes_path(post.id), method: :post,
+      <%= link_to post_likes_path(post), method: :post,
               remote: true, class: 'btn btn-outline-danger' do %>
         <i class="far fa-heart"></i>
       <% end %>
-  </div>
+    </div>
   <% end %>
   <div class="nav justify-content-end mt-1 mr-1">
     <p><small class="text-muted"><%= post.liked_users.count %> likes</small></p>
