@@ -1,28 +1,61 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
 <!-- 新着投稿ダミー -->
-<h2>新着投稿</h2>
-<hr size="20" noshad>
-<div class="card-deck">
-<% @posts.each do |post| %>
-  <div class="card">
-    <% if post.image.attached? %>
-      <%= link_to post_path(post), target: "_blank" do %>
-        <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
-                class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
-      <% end %>
-    <% end %>
+<div>
+  <h2>新着投稿</h2>
+  <hr size="20" noshad>
+  <div class="card-deck">
+    <% @posts.each do |post| %>
+      <div class="card">
+        <% if post.image.attached? %>
+          <%= link_to post_path(post), target: "_blank" do %>
+            <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                    class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+          <% end %>
+        <% end %>
 
-    <div class="card-body">
-      <div id="likes_buttons_<%= post.id %>">
-        <%= render partial: 'likes/like', locals: {post: post} %>
+        <div class="card-body">
+          <div id="likes_buttons_<%= post.id %>">
+            <%= render partial: 'likes/like', locals: {post: post} %>
+          </div>
+          <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+        </div>
       </div>
-      <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
-    </div>
+    <% end %>
   </div>
-<% end %>
 </div>
-<!-- end -->
+<!--end-->
+
+
+<!--週間いいね順-->
+<div class="mt-5">
+  <h2>週間ランキング</h2>
+  <hr size="20" noshad>
+  <div class="card-deck">
+    <% @posts_likes_weekly.each do |post| %>
+      <div class="card">
+        <% if post.image.attached? %>
+          <%= link_to post_path(post), target: "_blank" do %>
+            <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                    class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+          <% end %>
+        <% end %>
+
+        <div class="card-body">
+          <div class="nav justify-content-end mt-1 mr-1">
+            <p><small class="text-muted"><%= post.liked_users.count %> likes</small></p>
+          </div>
+          <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!--end-->
+
+
+<!--総合いいね順-->
+<!--end-->
 
 
 <!-- 投稿新規作成ボタン -->
