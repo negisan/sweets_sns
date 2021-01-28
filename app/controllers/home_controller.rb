@@ -1,9 +1,14 @@
 class HomeController < ApplicationController
   def index
     @posts = Post.all.order(created_at: :desc).limit(4)
-    posts_likes_desc = Post.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
-    @posts_likes_weekly = posts_likes_desc.first(4)
 
-    #@posts_likes_weekly = Post.includes(:liked_users).find(Like.group(:user_id).order('count(user_id) desc').limit(4).pluck(:user_id))
+    to  = Time.current.at_end_of_day
+    from    = (to - 6.day).at_beginning_of_day
+    posts_weekly = Post.where(created_at: from...to)
+    posts_likes_weekly_desc = posts_weekly.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
+    @posts_likes_weekly = posts_likes_weekly_desc.first(4)
+
+    posts_likes_all_time_desc = Post.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
+    @posts_likes_all_time = posts_likes_all_time_desc.first(4)
   end
 end
