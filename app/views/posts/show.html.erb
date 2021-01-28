@@ -19,16 +19,15 @@
     <% end %>
   </div>
   <div class="card-body px-5">
-    <p class="card-text"><%= simple_format(@post.body) %></p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-
+    <% if @post.body %>
+      <div class="my-5">
+        <p class="card-text"><%= simple_format(@post.body) %></p>
+      </div>
+    <% end %>
     <div id="likes_buttons_<%= @post.id %>">
       <%= render partial: 'likes/like', locals: {post: @post} %>
     </div>
-
-
-
+    <p class="card-text"><small class="text-muted">投稿日時：<%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
   </div>
 </div>
 
