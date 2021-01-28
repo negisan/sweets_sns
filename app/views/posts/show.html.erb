@@ -21,11 +21,29 @@
   <div class="card-body">
     <p class="card-text"><%= simple_format(@post.body) %></p>
     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    <div class="nav justify-content-end">
-      <a href="#" class="btn btn-outline-danger">
-        <i class="far fa-heart"></i>
-      </a>
+
+
+    <div>
+      <% if user_signed_in? && current_user.already_liked?(@post) %>
+        <div class="nav justify-content-end">
+          <a href="#" class="btn btn-outline-danger">
+            <i class="fas fa-heart"></i>
+          </a>
+        </div>
+      <% else %>
+        <div class="nav justify-content-end">
+        <a href="#" class="btn btn-outline-danger">
+          <i class="far fa-heart"></i>
+        </a>
+      </div>
+      <% end %>
+      <div class="nav justify-content-end mt-1 mr-1">
+        <p><small class="text-muted"><%= @post.liked_users.count %> likes</small></p>
+      </div>
     </div>
+
+
+
   </div>
 </div>
 
