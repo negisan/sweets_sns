@@ -72,3 +72,5 @@ gem "mini_magick"
 gem 'activestorage-validator'
 gem 'image_processing', '~> 1.2'
 gem "font-awesome-sass"
+
+gem "aws-sdk-s3", require: false
