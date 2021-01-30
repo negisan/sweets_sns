@@ -16,7 +16,7 @@ end
 4.times do |i|
   post = Post.new(
     user_id: 1,
-    body: "post No#{i+1}"
+    body: "No#{i+1}. Time goes on. So whatever you’re going to do, do it. Do it now. Don’t wait."
   )
   post.image.attach(io: File.open(Rails.root.join("app/assets/images/sample#{i+1}.jpg")), filename: "sample#{i+1}.jpg")
   post.save!
