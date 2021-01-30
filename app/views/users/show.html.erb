@@ -2,9 +2,11 @@
 <p>Find me in app/views/users/show.html.erb</p>
 <div style="height: 12rem">
   <div class="nav justify-content-center">
+
     <div>
-      <%= image_tag @user.avatar.variant(resize: "360x360").processed,
-            class: 'user-avatar-trim-to-circle' %>
+      <%= link_to @user.avatar.variant(gravity: :center, resize:"1024x1024^", crop:"1024x1024+0+0").processed, target: '_blank' do %>
+        <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle' %>
+      <% end %>
     </div>
   </div>
 </div>
