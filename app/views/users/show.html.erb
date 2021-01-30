@@ -4,8 +4,8 @@
   <div class="nav justify-content-center">
     <div>
       <%= link_to @user.avatar.variant(gravity: :center, resize:"1024x1024^", crop:"1024x1024+0+0").processed, target: '_blank' do %>
-        <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle' %>
-        <% if @user.id == current_user.id %>
+        <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle', id: 'user_avatar' %>
+        <% if user_signed_in? && @user.id == current_user.id %>
           <div class="nav justify-content-center mt-3">
             <%= link_to 'ユーザー情報の編集', edit_user_registration_path  %>
           </div>
@@ -21,7 +21,7 @@
   <div class="card-deck">
     <% @posts.each do |post| %>
       <div class="mr-3 mb-3" style="display: flex; flex-wrap: wrap">
-        <div class="card" style="width: 12rem">
+        <div class="card" style="width: 12rem" id="<%= post.user.name + "の投稿" %>">
           <% if post.image.attached? %>
             <%= link_to post_path(post), target: "_blank" do %>
               <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
