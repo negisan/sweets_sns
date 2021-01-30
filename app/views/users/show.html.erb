@@ -1,5 +1,14 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
+<div style="height: 12rem">
+  <div class="nav justify-content-center">
+    <div>
+      <%= image_tag @user.avatar.variant(resize: "360x360").processed,
+            class: 'user-avatar-trim-to-circle' %>
+    </div>
+  </div>
+</div>
+
 
 <h2><%= @user.name %>の投稿</h2>
 <hr size="20" noshad>
