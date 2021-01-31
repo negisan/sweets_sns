@@ -14,6 +14,8 @@
           <% end %>
         <% end %>
 
+        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+
         <div class="card-body">
           <div id="likes_buttons_<%= post.id %>">
             <%= render partial: 'likes/like', locals: {post: post} %>
@@ -41,6 +43,8 @@
           <% end %>
         <% end %>
 
+        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
             <p><small class="text-muted"><%= post.liked_users.count %> likes</small></p>
@@ -67,6 +71,8 @@
                     class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
           <% end %>
         <% end %>
+
+        <%= render partial: 'user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
