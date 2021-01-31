@@ -30,19 +30,24 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
     end
 
     describe 'posts/show' do
-      it "showページにアクセスできる" do
+      before do
         visit post_path(post)
+      end
+
+      it "showページにアクセスできる" do
         expect(page).to have_selector 'img[alt="sample.jpg"]'
       end
 
       it '編集リンクが表示されない' do
-        visit post_path(post)
         expect(page).to_not have_selector 'a', text: '編集'
       end
 
       it '削除リンクが表示されない' do
-        visit post_path(post)
         expect(page).to_not have_selector 'a', text: '削除'
+      end
+
+      it '投稿者のアバターが表示される' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
       end
     end
 
@@ -137,21 +142,23 @@ RSpec.describe 'ログインしているユーザー', type: :system do
     end
 
     describe "posts/show" do
-      it 'showページにアクセスできる' do
+      before do
         visit post_path(post)
+      end
+
+      it 'showページにアクセスできる' do
         expect(page).to have_content '投稿詳細'
       end
 
       it "画像が表示される" do
-        visit post_path(post)
         expect(page).to have_selector 'img[alt="sample.jpg"]'
       end
 
-      context 'postを作成したユーザーとログインしているユーザーが一致' do
-        before do
-          visit post_path(post)
-        end
+      it '投稿者のアバターが表示される' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
 
+      context 'postを作成したユーザーとログインしているユーザーが一致' do
         it '編集リンクが表示される' do
           expect(page).to have_selector 'a', text: '編集'
         end
