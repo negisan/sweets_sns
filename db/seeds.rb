@@ -18,6 +18,7 @@ end
     user_id: 1,
     body: "No#{i+1}. Time goes on. So whatever you’re going to do, do it. Do it now. Don’t wait."
   )
-  post.image.attach(io: File.open(Rails.root.join("app/assets/images/sample#{i+1}.jpg")), filename: "sample#{i+1}.jpg")
+  post.image.attach(io: File.open("app/assets/images/sample#{i+1}.jpg"), filename: "sample#{i+1}.jpg",
+                      content_type: 'image/jpg')
   post.save!
 end
