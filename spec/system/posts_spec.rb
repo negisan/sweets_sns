@@ -7,6 +7,27 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
 
 
   describe 'テンプレートの表示' do
+    describe 'header' do
+      it 'サインアップが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'サインアップ'
+      end
+
+      it 'ログインが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'ログイン'
+      end
+
+      it 'ログアウトが表示されない' do
+        visit root_path
+        expect(page).to_not have_selector 'a', text: 'ログアウト'
+      end
+
+      it 'Homeへのリンクが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'Home'
+      end
+    end
 
     describe 'posts/show' do
       it "showページにアクセスできる" do
@@ -22,6 +43,25 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       it '削除リンクが表示されない' do
         visit post_path(post)
         expect(page).to_not have_selector 'a', text: '削除'
+      end
+    end
+
+    describe 'Home' do
+      before do
+        visit root_path
+      end
+
+      it '投稿にユーザーアバターが表示されている' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
+
+      it '投稿のユーザーアバターをクリックするとユーザー詳細ページにアクセスできる' do
+        first("#user_avatar").click
+        expect(page).to have_content "#{post.user.name}の投稿"
+      end
+
+      it '投稿にひとことが表示されていない' do
+        expect(page).to_not have_content post.body
       end
     end
   end
@@ -134,6 +174,26 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         it '削除リンクが表示されない' do
           expect(page).to_not have_selector 'a', text: '削除'
         end
+      end
+    end
+
+    describe 'Home' do
+      before do
+        sign_in user
+        visit root_path
+      end
+
+      it '投稿にユーザーアバターが表示されている' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
+
+      it '投稿のユーザーアバターをクリックするとユーザー詳細ページにアクセスできる' do
+        first("#user_avatar").click
+        expect(page).to have_content "#{post.user.name}の投稿"
+      end
+
+      it '投稿にひとことが表示されていない' do
+        expect(page).to_not have_content post.body
       end
     end
   end
