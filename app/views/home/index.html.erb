@@ -89,5 +89,7 @@
 
 <!-- 投稿新規作成ボタン -->
 <div class='nav justify-content-end' style="position:fixed; bottom:25px; right:25px; z-index: 999;">
-  <%= link_to '+', new_post_url, class: 'btn btn-primary rounded-circle' %>
+  <%= link_to new_post_url, class: 'btn btn-primary rounded-circle', style: 'width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;' do %>
+    <i class="fas fa-plus"></i>
+  <% end %>
 </div>
