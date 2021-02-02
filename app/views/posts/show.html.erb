@@ -28,7 +28,7 @@
   </div>
   <div class="card-footer bg-light">
     <div class="my-1">
-      <%= link_to  user_path(@post.user) do %>
+      <%= link_to  profile_show_user_path(@post.user) do %>
         <div class="d-inline-block">
           <%= image_tag @post.user.avatar.variant(resize:"240x240").processed, class: 'user-avatar-trim-to-circle',
                   style: "width: 40px; height: 40px;", id: 'user_avatar' %>

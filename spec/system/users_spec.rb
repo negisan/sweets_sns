@@ -74,23 +74,23 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
   let!(:post) {FactoryBot.create(:post, user_id: user.id)}
 
   describe 'users/show' do
+    before do
+      visit profile_show_user_path(user)
+    end
+
     it 'ユーザー詳細ページへアクセスできる' do
-      visit user_path(user)
       expect(page).to have_content user.name
     end
 
     it '他のユーザーページでそのユーザーの投稿一覧を見ることができる' do
-      visit user_path(user)
       expect(page).to have_selector 'div', id: user.name + 'の投稿'
     end
 
     it 'ユーザーのアバターが表示される' do
-      visit user_path(user)
       expect(page).to have_selector '#user_avatar'
     end
 
     it 'ユーザー編集ページへのリンクが表示されない' do
-      visit user_path(user)
       expect(page).to_not have_selector 'a', text: 'ユーザー情報の編集'
     end
   end
@@ -106,7 +106,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
   describe 'users/show' do
     before do
-      visit user_path(user)
+      visit profile_show_user_path(user)
     end
 
     it '自身の投稿一覧が表示される' do

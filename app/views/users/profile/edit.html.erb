@@ -1,0 +1,61 @@
+<h1>プロフィールの変更</h1>
+<div class="nav justify-content-end">
+  <%= link_to 'ユーザー登録内容に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
+</div>
+<%= form_with model: @user, url: profile_update_user_path, local: true do |f| %>
+  <div class="mt-5">
+    <div class="form-group">
+      <%= f.label :name, 'ニックネームの変更' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="mt-5">
+      <p>アバターの変更</p>
+      <div id="preview">
+          <%= image_tag @user.avatar.variant(gravity: :center, resize:"360x360^", crop:"360x360+0+0").processed,
+                    class: 'user-avatar-trim-to-circle mt-3', id: 'user_avatar' %>
+      </div>
+    </div>
+
+    <div class="input-group mt-5">
+      <div class="custom-file">
+        <%= f.file_field :image, class: 'custom-file-input', name: 'user[avatar]' %>
+        <%= f.label :image, 'ファイル選択...', class: 'custom-file-label', data: {browse: '参照'} %>
+      </div>
+    </div>
+
+    <div class="nav justify-content-end mt-5">
+      <%= f.submit '変更を確定する', class: 'btn btn-primary' %>
+    </div>
+
+  </div>
+<% end %>
+
+<script>
+
+  $('.custom-file-input').on('change', handleFileSelect);
+  function handleFileSelect(evt) {
+    // 繰り返し実行時の処理
+    $('#preview').remove();
+    $(this).parents('.input-group').before('<div id="preview"></div>');
+
+    var file = evt.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = (function(theFile) {
+      return function(e) {
+        if (theFile.type.match('image.*')) {
+          // 画像のプレビューの表示
+          var $html = [
+            '<div class="d-inline-block mt-3"><img class="user-avatar-trim-to-circle " src="', e.target.result,'" title="', escape(theFile.name), '" /></div>'
+            ].join('');
+        }
+        $('#preview').append($html);
+      };
+    })(file);
+    reader.readAsDataURL(file);
+
+    $(this).next('.custom-file-label').html(+ evt.target.files.length + '個のファイルを選択しました');
+  }
+
+</script>

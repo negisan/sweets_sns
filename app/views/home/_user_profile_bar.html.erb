@@ -1,9 +1,9 @@
 <div class="card-footer bg-linght">
 <div>
-  <%= link_to  user_path(post.user) do %>
+  <%= link_to  profile_show_user_path(post.user) do %>
     <div class="d-inline-block">
       <%= image_tag post.user.avatar.variant(resize:"240x240").processed, class: 'user-avatar-trim-to-circle',
-              style: "width: 15px; height: 15px;", id: 'user_avatar' %>
+              style: "width: 25px; height: 25px;", id: 'user_avatar' %>
     </div>
     <div class="d-inline-block ml-3 text-secondary">
       <%= post.user.name %>
