@@ -5,5 +5,20 @@ class Users::ProfileController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
   end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update!(user_profile_params)
+      redirect_to profile_show_user_path(@user)
+    else
+      render profile_edit_user_path(@user)
+    end
+  end
+
+  private
+    def user_profile_params
+      params.require(:user).permit(:avatar, :name)
+    end
 end
