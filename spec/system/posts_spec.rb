@@ -146,10 +146,6 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         visit post_path(post)
       end
 
-      it 'showページにアクセスできる' do
-        expect(page).to have_content '投稿詳細'
-      end
-
       it "画像が表示される" do
         expect(page).to have_selector 'img[alt="sample.jpg"]'
       end
@@ -314,8 +310,8 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         find('#like_btn').click
         expect(find('#like_btn')).to have_css '.fas'
         sleep 1
-        find('.fas').click
-        expect(find('#like_btn')).to_not have_css '.fas'
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.far'
       end
     end
   end

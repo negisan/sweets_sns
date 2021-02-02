@@ -75,7 +75,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
 
   describe 'users/show' do
     before do
-      visit user_path(user)
+      visit profile_show_user_path(user)
     end
 
     it 'ユーザー詳細ページへアクセスできる' do
@@ -106,7 +106,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
   describe 'users/show' do
     before do
-      visit user_path(user)
+      visit profile_show_user_path(user)
     end
 
     it '自身の投稿一覧が表示される' do
