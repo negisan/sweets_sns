@@ -16,11 +16,10 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      resource :profile, only: [:show, :edit, :update]
+      get 'profile/show', to: 'users/profile#show'
+      get 'profile/edit', to: 'users/profile#edit'
     end
   end
-
-  #resources :users, only: [:show]
 
   root to: 'home#index'
 end
