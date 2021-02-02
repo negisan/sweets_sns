@@ -1,7 +1,7 @@
 <div style="height: 12rem">
   <div class="nav justify-content-center">
     <div>
-      <%= link_to @user.avatar.variant(gravity: :center, resize:"1024x1024^", crop:"1024x1024+0+0").processed, target: '_blank' do %>
+      <%= link_to @user.avatar.variant(resize:"1024x1024^").processed, target: '_blank' do %>
         <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle', id: 'user_avatar' %>
         <% if user_signed_in? && @user.id == current_user.id %>
           <div class="nav justify-content-center mt-3">
