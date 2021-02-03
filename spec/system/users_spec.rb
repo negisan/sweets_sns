@@ -146,6 +146,30 @@ RSpec.describe 'ログインしているユーザー', type: :system do
     it '現在のユーザーのアバターが表示されている' do
       expect(page).to have_selector 'img[id="user_avatar"]'
     end
+
+    it '変更を反映するボタンをクリックした後ユーザー詳細ページにリダイレクトされる' do
+      click_on '変更を反映する'
+      expect(page).to have_content user.name + 'の投稿'
+    end
+
+    it 'ユーザーのニックネームの変更が正常に反映される' do
+      fill_in 'ニックネームの変更', with: 'changed_name'
+      click_on '変更を反映する'
+      expect(page).to have_content 'changed_nameの投稿'
+    end
+
+    it 'ユーザーのアバターの変更が正常に反映される' do
+      page.attach_file('spec/fixtures/sample.jpg') do
+        page.find('.custom-file').click
+      end
+      click_on '変更を反映する'
+      expect(page).to have_selector 'img[title="sample.jpg"]'
+    end
+
+    it 'ユーザー情報に関する設定ボタンをクリックした後、ユーザー情報に関する設定ページが正しく表示される' do
+      click_on 'ユーザー情報に関する設定'
+      expect(page).to have_selector 'h2', text: 'ユーザー情報に関する設定'
+    end
   end
 end
 
