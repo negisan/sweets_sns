@@ -43,6 +43,9 @@ RSpec.describe 'ログインとログアウト', type: :system do
   end
 end
 
+
+
+
 RSpec.describe 'サインアップ', type: :system do
   before do
     User.create!(email: 'test@example.com', password: 'password')
@@ -69,6 +72,9 @@ RSpec.describe 'サインアップ', type: :system do
   end
 end
 
+
+
+
 RSpec.describe 'ログインしていないユーザー', type: :system do
   let!(:user) { FactoryBot.create(:user) }
   let!(:post) {FactoryBot.create(:post, user_id: user.id)}
@@ -78,12 +84,12 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       visit profile_show_user_path(user)
     end
 
-    it 'ユーザー詳細ページへアクセスできる' do
-      expect(page).to have_content user.name
+    it 'アクセスできる' do
+      expect(page).to have_content user.name + 'の投稿'
     end
 
-    it '他のユーザーページでそのユーザーの投稿一覧を見ることができる' do
-      expect(page).to have_selector 'div', id: user.name + 'の投稿'
+    it '投稿一覧が表示される' do
+      expect(page).to have_selector 'img[alt="sample.jpg"]'
     end
 
     it 'ユーザーのアバターが表示される' do
@@ -95,6 +101,9 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
     end
   end
 end
+
+
+
 
 RSpec.describe 'ログインしているユーザー', type: :system do
   let!(:user) { FactoryBot.create(:user) }
@@ -131,8 +140,8 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       expect(page).to have_content 'プロフィールの変更'
     end
 
-    it 'ユーザー情報に関する設定へのリンクがある' do
-      expect(page).to have_link 'ユーザー情報に関する設定'
+    it 'ユーザー登録情報に関する設定へのリンクがある' do
+      expect(page).to have_link 'ユーザー登録情報に関する設定'
     end
 
     it 'ニックネームの変更フォームがある' do
@@ -166,9 +175,9 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       expect(page).to have_selector 'img[title="sample.jpg"]'
     end
 
-    it 'ユーザー情報に関する設定ボタンをクリックした後、ユーザー情報に関する設定ページが正しく表示される' do
-      click_on 'ユーザー情報に関する設定'
-      expect(page).to have_selector 'h2', text: 'ユーザー情報に関する設定'
+    it 'ユーザー登録情報に関する設定ボタンをクリックした後、ユーザー登録情報に関する設定ページが正しく表示される' do
+      click_on 'ユーザー登録情報に関する設定'
+      expect(page).to have_selector 'h2', text: 'ユーザー登録情報に関する設定'
     end
   end
 end

@@ -1,7 +1,7 @@
 <h2>プロフィールの変更</h2>
 <hr size="10" noshad>
 <div class="nav justify-content-end mt-5">
-  <%= link_to 'ユーザー情報に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
+  <%= link_to 'ユーザー登録情報に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
 </div>
 <%= form_with model: @user, url: profile_update_user_path, local: true do |f| %>
   <div class="mt-5">

@@ -103,7 +103,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       end
     end
 
-    describe 'posts/show' do
+    describe '投稿詳細' do
       it "Likeボタンが表示される" do
         visit post_path(post)
         expect(page).to have_selector 'a', id: 'like_btn'

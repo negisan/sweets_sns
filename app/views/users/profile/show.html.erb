@@ -23,7 +23,7 @@
           <% if post.image.attached? %>
             <%= link_to post_path(post), target: "_blank" do %>
               <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
-                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: post.image.filename %>
             <% end %>
           <% end %>
 
