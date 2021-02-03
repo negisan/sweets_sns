@@ -1,6 +1,6 @@
-<h1>プロフィールの変更</h1>
+<h2>プロフィールの変更</h2>
 <hr size="10" noshad>
-<div class="nav justify-content-end">
+<div class="nav justify-content-end mt-5">
   <%= link_to 'ユーザー登録内容に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
 </div>
 <%= form_with model: @user, url: profile_update_user_path, local: true do |f| %>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="nav justify-content-end mt-5">
-      <%= f.submit '変更を確定する', class: 'btn btn-primary' %>
+      <%= f.submit '変更を反映する', class: 'btn btn-primary' %>
     </div>
 
   </div>
