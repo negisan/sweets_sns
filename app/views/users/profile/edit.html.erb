@@ -1,7 +1,7 @@
 <h2>プロフィールの変更</h2>
 <hr size="10" noshad>
 <div class="nav justify-content-end mt-5">
-  <%= link_to 'ユーザー登録内容に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
+  <%= link_to 'ユーザー情報に関する設定', edit_user_registration_path, class: 'btn btn-light' %>
 </div>
 <%= form_with model: @user, url: profile_update_user_path, local: true do |f| %>
   <div class="mt-5">
@@ -20,8 +20,8 @@
 
     <div class="input-group mt-5">
       <div class="custom-file">
-        <%= f.file_field :image, class: 'custom-file-input', name: 'user[avatar]' %>
-        <%= f.label :image, 'ファイル選択...', class: 'custom-file-label', data: {browse: '参照'} %>
+        <%= f.file_field :avatar, class: 'custom-file-input', name: 'user[avatar]' %>
+        <%= f.label :avatar, 'ファイル選択...', class: 'custom-file-label', data: {browse: '参照'} %>
       </div>
     </div>
 

@@ -121,5 +121,31 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       expect(page).to have_selector 'a', text: 'ユーザー情報の編集'
     end
   end
+
+  describe 'プロフィール変更ページ' do
+    before do
+      visit profile_edit_user_path(user)
+    end
+
+    it 'アクセスできる' do
+      expect(page).to have_content 'プロフィールの変更'
+    end
+
+    it 'ユーザー情報に関する設定へのリンクがある' do
+      expect(page).to have_link 'ユーザー情報に関する設定'
+    end
+
+    it 'ニックネームの変更フォームがある' do
+      expect(page).to have_selector 'input[id="user_name"]'
+    end
+
+    it 'アバター変更するファイル選択欄がある' do
+      expect(page).to have_content 'ファイル選択'
+    end
+
+    it '現在のユーザーのアバターが表示されている' do
+      expect(page).to have_selector 'img[id="user_avatar"]'
+    end
+  end
 end
 
