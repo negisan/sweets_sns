@@ -73,7 +73,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
   let!(:user) { FactoryBot.create(:user) }
   let!(:post) {FactoryBot.create(:post, user_id: user.id)}
 
-  describe 'users/show' do
+  describe 'ユーザー詳細ページ' do
     before do
       visit profile_show_user_path(user)
     end
@@ -104,7 +104,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
     sign_in user
   end
 
-  describe 'users/show' do
+  describe 'ユーザー詳細ページ' do
     before do
       visit profile_show_user_path(user)
     end
