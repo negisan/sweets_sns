@@ -15,9 +15,9 @@
 
 <div class="nav justify-content-center mt-5">
   <% if @user.introduction %>
-    <p>
-      <%= @user.introduction %>
-    </p>
+    <div style="text-align: center;">
+      <p><%= simple_format(@user.introduction) %></p>
+    </div>
   <% end %>
 </div>
 
