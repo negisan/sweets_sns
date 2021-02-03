@@ -180,5 +180,24 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       expect(page).to have_selector 'h2', text: 'ユーザー登録情報に関する設定'
     end
   end
+
+  describe 'ユーザー登録情報に関する設定ページ' do
+    before do
+      visit edit_user_registration_path(user)
+    end
+
+    it 'アクセスできる' do
+      expect(page).to have_selector 'h2', text: 'ユーザー登録情報に関する設定'
+    end
+
+    it '現在のEメールが表示される' do
+      expect(page).to have_xpath("//input[@id='user_email'][@value='#{user.email}']")
+    end
+
+    it '更新するには現在のパスワードを入力する必要がある' do
+      click_on '更新する'
+      expect(page).to have_content '現在のパスワードを入力してください'
+    end
+  end
 end
 
