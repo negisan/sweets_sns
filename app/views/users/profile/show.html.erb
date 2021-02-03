@@ -13,6 +13,14 @@
   </div>
 </div>
 
+<div class="nav justify-content-center mt-5">
+  <% if @user.introduction %>
+    <div style="text-align: center;">
+      <p><%= simple_format(@user.introduction) %></p>
+    </div>
+  <% end %>
+</div>
+
 <div class="mt-5">
   <h2><%= @user.name %>の投稿</h2>
   <hr size="20" noshad>

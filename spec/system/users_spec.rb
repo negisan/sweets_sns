@@ -47,12 +47,13 @@ end
 
 
 RSpec.describe 'サインアップ', type: :system do
+  let!(:user){ User.create!(email: 'duplicate@example.com', password: 'password')}
+
   before do
-    User.create!(email: 'test@example.com', password: 'password')
+    visit new_user_registration_path
   end
 
   it '有効な入力でサインアップに成功する' do
-    visit new_user_registration_path
     expect {
       fill_in 'Eメール', with: 'success@example.com'
       fill_in 'パスワード', with: 'password'
@@ -62,13 +63,21 @@ RSpec.describe 'サインアップ', type: :system do
   end
 
   it '重複したメールアドレスでサインアップに失敗する' do
-    visit new_user_registration_path
     expect {
-      fill_in 'Eメール', with: 'test@example.com'
+      fill_in 'Eメール', with: 'duplicate@example.com'
       fill_in 'パスワード', with: 'password'
       fill_in 'パスワード（確認用）', with: 'password'
       click_button 'サインアップ'
   }.to_not change{User.count}
+  end
+
+  it '登録時のニックネームが反映される' do
+    fill_in 'Eメール', with: 'success@example.com'
+    fill_in 'ニックネーム', with: 'テストユーザー'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認用）', with: 'password'
+    click_button 'サインアップ'
+    expect(page).to have_link 'テストユーザー'
   end
 end
 
@@ -99,6 +108,12 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
     it 'ユーザー編集ページへのリンクが表示されない' do
       expect(page).to_not have_selector 'a', text: 'ユーザー情報の編集'
     end
+
+    it 'ユーザーの自己紹介が表示される' do
+      user.update(introduction: 'this is introduction')
+      visit current_path
+      expect(page).to have_content 'this is introduction'
+    end
   end
 end
 
@@ -128,6 +143,12 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
     it 'ユーザー編集ページへのリンクが表示される' do
       expect(page).to have_selector 'a', text: 'ユーザー情報の編集'
+    end
+
+    it 'ユーザーの自己紹介が表示される' do
+      user.update(introduction: 'this is introduction')
+      visit current_path
+      expect(page).to have_content 'this is introduction'
     end
   end
 
@@ -178,6 +199,12 @@ RSpec.describe 'ログインしているユーザー', type: :system do
     it 'ユーザー登録情報に関する設定ボタンをクリックした後、ユーザー登録情報に関する設定ページが正しく表示される' do
       click_on 'ユーザー登録情報に関する設定'
       expect(page).to have_selector 'h2', text: 'ユーザー登録情報に関する設定'
+    end
+
+    it '自己紹介編集が正常に反映される' do
+      fill_in '自己紹介の編集', with: '編集された自己紹介です'
+      click_on '変更を反映する'
+      expect(page).to have_content '編集された自己紹介です'
     end
   end
 
