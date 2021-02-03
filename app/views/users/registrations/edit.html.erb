@@ -1,7 +1,8 @@
-<h2>ユーザー登録情報の編集</h2>
+<h2>ユーザー登録情報に関する設定</h2>
+<hr size="20" noshad>
 
-<%= form_with model: @user, url: user_registration_path(@user) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+<%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+  <%= render "users/shared/error_messages", resource: @user %>
 
   <div class="form-group mt-5">
     <%= f.label :email %><br />
@@ -13,7 +14,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :password %> <i>(パスワードを変更する必要のない場合空欄のままにしてください)</i><br />
+    <%= f.label :password %> <strong>(パスワードを変更する必要のない場合空欄のままにしてください)</strong><br />
 
     <% if @minimum_password_length %>
       <% m = '最小' + @minimum_password_length.to_s + '文字' %>
@@ -31,9 +32,11 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :current_password %> <i>(変更を確認するために現在のパスワードを入力する必要があります)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
+  <div class="form-group mt-5">
+    <%= f.label :current_password %> <strong>(変更を確定するには現在のパスワードを入力する必要があります)</strong>
+    <hr size="10" noshad>
+    <%= f.password_field :current_password, autocomplete: "current-password",
+            class: 'form-control', placeholder: '現在のパスワードを入力してください' %>
   </div>
 
   <div class="nav justify-content-end mt-5">

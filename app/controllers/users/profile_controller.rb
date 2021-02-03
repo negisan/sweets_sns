@@ -11,7 +11,7 @@ class Users::ProfileController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update!(user_profile_params)
-      redirect_to profile_show_user_path(@user)
+      redirect_to profile_show_user_path(@user), notice: 'プロフィールを更新しました'
     else
       render profile_edit_user_path(@user)
     end

@@ -1,5 +1,5 @@
 <div class="w-full max-w-xs">
-    <h1 class="font-hairline mb-6 text-center">Forgot your password?</h1>
+    <h3 class="text-center">パスワードを忘れましたか？</h3>
 
     <%= form_for(resource,
                  as: resource_name,
@@ -12,19 +12,18 @@
         <%#= render "devise/shared/error_messages", resource: resource %>
         <%= devise_error_messages! %>
 
-        <div class="mb-4">
+        <div class="form-group mt-5">
             <%= f.label :email, class: "block font-bold mb-2 text-gray-700 text-sm" %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email",
-                              class: "appearance-none border leading-tight focus:outline-none px-3 py-2 rounded shadow focus:shadow-outline text-gray-700 w-full"
+                              class: "form-control appearance-none border leading-tight focus:outline-none px-3 py-2 rounded shadow focus:shadow-outline text-gray-700 w-full"
             %>
         </div>
 
-        <div class="mb-4">
-            <%= f.submit "Send Password Reset Info",
-                         class: "button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" %>
+        <div class="nav justify-content-center mt-5">
+            <%= f.submit "パスワード再設定のメールを受け取る",
+                         class: "btn btn-primary" %>
         </div>
 
-        <%= render "devise/shared/links" %>
     <% end %>
 
     <%= render "devise/shared/form_footer" %>

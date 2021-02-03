@@ -2,7 +2,7 @@
   <div class="nav justify-content-center">
     <div>
       <%= link_to @user.avatar.variant(resize:"1024x1024^").processed, target: '_blank' do %>
-        <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle', id: 'user_avatar' %>
+        <%= image_tag @user.avatar.variant(resize: "360x360").processed, class: 'user-avatar-trim-to-circle', id: 'user_avatar', title: @user.avatar.filename %>
         <% if user_signed_in? && @user.id == current_user.id %>
           <div class="nav justify-content-center mt-3">
             <%= link_to 'ユーザー情報の編集', profile_edit_user_path, class: 'btn btn-light'  %>
@@ -23,7 +23,7 @@
           <% if post.image.attached? %>
             <%= link_to post_path(post), target: "_blank" do %>
               <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
-                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: post.image.filename %>
             <% end %>
           <% end %>
 
