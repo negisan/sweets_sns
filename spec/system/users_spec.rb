@@ -108,6 +108,12 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
     it 'ユーザー編集ページへのリンクが表示されない' do
       expect(page).to_not have_selector 'a', text: 'ユーザー情報の編集'
     end
+
+    it 'ユーザーの自己紹介が表示される' do
+      user.update(introduction: 'this is introduction')
+      visit current_path
+      expect(page).to have_content 'this is introduction'
+    end
   end
 end
 
@@ -137,6 +143,12 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
     it 'ユーザー編集ページへのリンクが表示される' do
       expect(page).to have_selector 'a', text: 'ユーザー情報の編集'
+    end
+
+    it 'ユーザーの自己紹介が表示される' do
+      user.update(introduction: 'this is introduction')
+      visit current_path
+      expect(page).to have_content 'this is introduction'
     end
   end
 
