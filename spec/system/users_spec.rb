@@ -47,12 +47,13 @@ end
 
 
 RSpec.describe 'サインアップ', type: :system do
+  let!(:user){ User.create!(email: 'duplicate@example.com', password: 'password')}
+
   before do
-    User.create!(email: 'test@example.com', password: 'password')
+    visit new_user_registration_path
   end
 
   it '有効な入力でサインアップに成功する' do
-    visit new_user_registration_path
     expect {
       fill_in 'Eメール', with: 'success@example.com'
       fill_in 'パスワード', with: 'password'
@@ -62,13 +63,21 @@ RSpec.describe 'サインアップ', type: :system do
   end
 
   it '重複したメールアドレスでサインアップに失敗する' do
-    visit new_user_registration_path
     expect {
-      fill_in 'Eメール', with: 'test@example.com'
+      fill_in 'Eメール', with: 'duplicate@example.com'
       fill_in 'パスワード', with: 'password'
       fill_in 'パスワード（確認用）', with: 'password'
       click_button 'サインアップ'
   }.to_not change{User.count}
+  end
+
+  it '登録時のニックネームが反映される' do
+    fill_in 'Eメール', with: 'success@example.com'
+    fill_in 'ニックネーム', with: 'テストユーザー'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認用）', with: 'password'
+    click_button 'サインアップ'
+    expect(page).to have_link 'テストユーザー'
   end
 end
 
