@@ -29,7 +29,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       end
     end
 
-    describe 'posts/show' do
+    describe '投稿詳細ページ' do
       before do
         visit post_path(post)
       end
