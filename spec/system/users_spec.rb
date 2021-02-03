@@ -200,6 +200,12 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       click_on 'ユーザー登録情報に関する設定'
       expect(page).to have_selector 'h2', text: 'ユーザー登録情報に関する設定'
     end
+
+    it '自己紹介編集が正常に反映される' do
+      fill_in '自己紹介の編集', with: '編集された自己紹介です'
+      click_on '変更を反映する'
+      expect(page).to have_content '編集された自己紹介です'
+    end
   end
 
   describe 'ユーザー登録情報に関する設定ページ' do
