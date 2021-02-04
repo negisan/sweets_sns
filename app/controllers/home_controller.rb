@@ -19,5 +19,9 @@ class HomeController < ApplicationController
     from_lawson = agent.get("https://www.lawson.co.jp/recommend/original/dessert/")
     @lawson_new_items = from_lawson.search('article#dessert li a').first(4)
 
+    #familymart:goods/category/dessert
+    #ファミマ
+    from_famima = agent.get("https://www.family.co.jp/goods/dessert.html")
+    @famima_new_items = from_famima.search('div.ly-list-goods .ly-mod-layout-clm a').first(4)
   end
 end
