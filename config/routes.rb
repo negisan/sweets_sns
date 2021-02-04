@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'weekly_ranking', to: 'weekly_ranking#index'
+  get 'all_time_ranking', to: 'all_time_ranking#index'
   resources :posts do
     resources :likes, only: [:create, :destroy]
   end
