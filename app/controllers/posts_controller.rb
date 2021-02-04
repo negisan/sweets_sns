@@ -3,7 +3,8 @@ before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destro
 before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.page(params[:page]).per(16).order(created_at: :desc).limit(500)
+    result = Post.page(params[:page]).order(created_at: :desc)
+    @posts = Kaminari.paginate_array(result).page(params[:page]).per(16)
   end
 
   def new
