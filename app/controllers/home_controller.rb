@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  require 'mechanize'
+
   def index
     @posts = Post.all.order(created_at: :desc).limit(4)
 
@@ -10,5 +12,15 @@ class HomeController < ApplicationController
 
     posts_likes_all_time_desc = Post.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
     @posts_likes_all_time = posts_likes_all_time_desc.first(4)
+
+
+    agent = Mechanize.new
+    #ローソン
+    from_lawson = agent.get("https://www.lawson.co.jp/recommend/original/dessert/")
+    @lawson_new_items = from_lawson.search('article#dessert li').first(4)
+
+    #ファミマ
+    from_famima = agent.get("https://www.family.co.jp/goods/dessert.html")
+    @famima_new_items = from_famima.search('div.ly-list-goods .ly-mod-layout-clm a').first(4)
   end
 end

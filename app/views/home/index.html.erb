@@ -1,7 +1,74 @@
+<!--コンビニ新着アイテム-->
+<div style="margin: 0 auto 80px;">
+  <h2>コンビニ新作</h2>
+</div>
+
+<div class="my-5">
+  <!--ローソン-->
+  <div class="mt-5">
+    <h3>ローソン新作</h3>
+    <hr size="20" noshad>
+    <div class="card-deck">
+      <% @lawson_new_items.each do |item| %>
+        <div class="card">
+          <%= link_to 'https://www.lawson.co.jp/' + item.search('a').attribute('href'), target: '_blank' do %>
+            <img src="https://www.lawson.co.jp/<%= item.search('img').attribute('src') %>"
+                  style="width: 100%", class="adjust_image_size" />
+          <% end %>
+
+          <div class="card-body">
+            <div class="my-1">
+              <p class="card-text">
+                <small class="text-muted"><%= item.search('img').attribute('alt') %></small>
+                <br>
+                <small class="text-muted"><%= item.search('p.price').inner_text %></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--end-->
+
+  <!--ファミマの新着アイテム-->
+  <div class="mt-5">
+    <h3>ファミマ新作</h3>
+    <hr size="20" noshad>
+    <div class="card-deck">
+      <% @famima_new_items.each do |item| %>
+        <div class="card">
+
+          <%= link_to item[:href], target: '_blank' do %>
+            <img src="https://www.family.co.jp/<%= item.search('img').attribute('src') %>"
+                  style="width: 100%", class="adjust_image_size" />
+          <% end %>
+
+          <div class="card-body">
+            <div class="my-1">
+              <p class="card-text">
+                <small class="text-muted"><%= item.search('p.ly-mod-infoset4-name').inner_text %></small>
+                <br>
+                <small class="text-muted"><%= item.search('p.ly-mod-infoset4-price').inner_text %></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--end-->
+</div>
+<!--end-->
+
+
+<div style="margin: 150px auto 80px;">
+  <h2>みんなのおすすめ</h2>
+</div>
 
 <!-- 新着投稿 -->
 <div id="new_posts">
-  <h2>新着投稿</h2>
+  <h3>新着投稿</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts.each do |post| %>
@@ -30,7 +97,7 @@
 
 <!--週間いいね順-->
 <div class="mt-5">
-  <h2>週間ランキング</h2>
+  <h3>週間ランキング</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts_likes_weekly.each do |post| %>
@@ -59,7 +126,7 @@
 
 <!--総合いいね順-->
 <div class="mt-5">
-  <h2>総合ランキング</h2>
+  <h3>総合ランキング</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts_likes_all_time.each do |post| %>
@@ -84,6 +151,8 @@
   </div>
 </div>
 <!--end-->
+
+
 
 
 <!-- 投稿新規作成ボタン -->
