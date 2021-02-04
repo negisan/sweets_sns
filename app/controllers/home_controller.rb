@@ -15,7 +15,9 @@ class HomeController < ApplicationController
 
 
     agent = Mechanize.new
-    page = agent.get("https://www.lawson.co.jp/recommend/original/dessert/")
-    @elements = page.search('article#dessert li a').first(4)
+    #ローソン
+    from_lawson = agent.get("https://www.lawson.co.jp/recommend/original/dessert/")
+    @lawson_new_items = from_lawson.search('article#dessert li a').first(4)
+
   end
 end
