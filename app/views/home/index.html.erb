@@ -1,6 +1,6 @@
 <!--コンビニ新着アイテム-->
 <div style="margin: 0 auto 80px;">
-  <h2>コンビニ新作</h2>
+  <h2>New Sweets</h2>
 </div>
 
 <div class="my-5">
@@ -62,7 +62,7 @@
 <!--end-->
 
 
-<div style="margin: 150px auto 80px;">
+<div style="margin: 120px auto 80px;">
   <h2>みんなのおすすめ</h2>
 </div>
 
@@ -80,7 +80,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div id="likes_buttons_<%= post.id %>">
@@ -90,6 +90,9 @@
         </div>
       </div>
     <% end %>
+  </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', posts_path, class: 'text-secondary' %>
   </div>
 </div>
 <!--end-->
@@ -109,7 +112,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
@@ -119,6 +122,9 @@
         </div>
       </div>
     <% end %>
+  </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', weekly_ranking_path, class: 'text-secondary' %>
   </div>
 </div>
 <!--end-->
@@ -138,7 +144,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
@@ -149,15 +155,11 @@
       </div>
     <% end %>
   </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', all_time_ranking_path, class: 'text-secondary' %>
+  </div>
 </div>
 <!--end-->
 
 
-
-
-<!-- 投稿新規作成ボタン -->
-<div class='nav justify-content-end' style="position:fixed; bottom:25px; right:25px; z-index: 999;">
-  <%= link_to new_post_url, class: 'btn btn-primary rounded-circle', style: 'width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;' do %>
-    <i class="fas fa-plus"></i>
-  <% end %>
-</div>
+<%= render partial: 'shared/create_new_post_btn' %>

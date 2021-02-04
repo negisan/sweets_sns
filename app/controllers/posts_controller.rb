@@ -2,6 +2,11 @@ class PostsController < ApplicationController
 before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  def index
+    result = Post.page(params[:page]).order(created_at: :desc)
+    @posts = Kaminari.paginate_array(result).page(params[:page]).per(16)
+  end
+
   def new
     @post = Post.new
   end
