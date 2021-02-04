@@ -13,7 +13,7 @@
         <div class="card">
           <%= link_to 'https://www.lawson.co.jp/' + item.search('a').attribute('href'), target: '_blank' do %>
             <img src="https://www.lawson.co.jp/<%= item.search('img').attribute('src') %>"
-                  style="width: 100%" />
+                  style="width: 100%", class="adjust_image_size" />
           <% end %>
 
           <div class="card-body">
@@ -41,7 +41,7 @@
 
           <%= link_to item[:href], target: '_blank' do %>
             <img src="https://www.family.co.jp/<%= item.search('img').attribute('src') %>"
-                  style="width: 100%" />
+                  style="width: 100%", class="adjust_image_size" />
           <% end %>
 
           <div class="card-body">
