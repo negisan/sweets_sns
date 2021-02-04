@@ -80,7 +80,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div id="likes_buttons_<%= post.id %>">
@@ -90,6 +90,9 @@
         </div>
       </div>
     <% end %>
+  </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', posts_path, class: 'text-secondary' %>
   </div>
 </div>
 <!--end-->
@@ -109,7 +112,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
@@ -138,7 +141,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'user_profile_bar', locals: {post: post} %>
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">

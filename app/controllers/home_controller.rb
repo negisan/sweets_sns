@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  require 'mechanize'
 
   def index
     @posts = Post.all.order(created_at: :desc).limit(4)
