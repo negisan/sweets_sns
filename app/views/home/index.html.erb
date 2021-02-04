@@ -1,8 +1,74 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<!-- 新着投稿ダミー -->
-<div>
-  <h2>新着投稿</h2>
+<!--コンビニ新着アイテム-->
+<div style="margin: 0 auto 80px;">
+  <h2>New Sweets</h2>
+</div>
+
+<div class="my-5">
+  <!--ローソン-->
+  <div class="mt-5">
+    <h3>ローソン新作</h3>
+    <hr size="20" noshad>
+    <div class="card-deck">
+      <% @lawson_new_items.each do |item| %>
+        <div class="card">
+          <%= link_to 'https://www.lawson.co.jp/' + item.search('a').attribute('href'), target: '_blank' do %>
+            <img src="https://www.lawson.co.jp/<%= item.search('img').attribute('src') %>"
+                  style="width: 100%", class="adjust_image_size" />
+          <% end %>
+
+          <div class="card-body">
+            <div class="my-1">
+              <p class="card-text">
+                <small class="text-muted"><%= item.search('img').attribute('alt') %></small>
+                <br>
+                <small class="text-muted"><%= item.search('p.price').inner_text %></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--end-->
+
+  <!--ファミマの新着アイテム-->
+  <div class="mt-5">
+    <h3>ファミマ新作</h3>
+    <hr size="20" noshad>
+    <div class="card-deck">
+      <% @famima_new_items.each do |item| %>
+        <div class="card">
+
+          <%= link_to item[:href], target: '_blank' do %>
+            <img src="https://www.family.co.jp/<%= item.search('img').attribute('src') %>"
+                  style="width: 100%", class="adjust_image_size" />
+          <% end %>
+
+          <div class="card-body">
+            <div class="my-1">
+              <p class="card-text">
+                <small class="text-muted"><%= item.search('p.ly-mod-infoset4-name').inner_text %></small>
+                <br>
+                <small class="text-muted"><%= item.search('p.ly-mod-infoset4-price').inner_text %></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--end-->
+</div>
+<!--end-->
+
+
+<div style="margin: 120px auto 80px;">
+  <h2>みんなのおすすめ</h2>
+</div>
+
+<!-- 新着投稿 -->
+<div id="new_posts">
+  <h3>新着投稿</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts.each do |post| %>
@@ -14,6 +80,8 @@
           <% end %>
         <% end %>
 
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+
         <div class="card-body">
           <div id="likes_buttons_<%= post.id %>">
             <%= render partial: 'likes/like', locals: {post: post} %>
@@ -23,13 +91,16 @@
       </div>
     <% end %>
   </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', posts_path, class: 'text-secondary' %>
+  </div>
 </div>
 <!--end-->
 
 
 <!--週間いいね順-->
 <div class="mt-5">
-  <h2>週間ランキング</h2>
+  <h3>週間ランキング</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts_likes_weekly.each do |post| %>
@@ -41,6 +112,8 @@
           <% end %>
         <% end %>
 
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
             <p><small class="text-muted"><%= post.liked_users.count %> likes</small></p>
@@ -50,13 +123,16 @@
       </div>
     <% end %>
   </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', weekly_ranking_path, class: 'text-secondary' %>
+  </div>
 </div>
 <!--end-->
 
 
 <!--総合いいね順-->
 <div class="mt-5">
-  <h2>総合ランキング</h2>
+  <h3>総合ランキング</h3>
   <hr size="20" noshad>
   <div class="card-deck">
     <% @posts_likes_all_time.each do |post| %>
@@ -68,6 +144,8 @@
           <% end %>
         <% end %>
 
+        <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+
         <div class="card-body">
           <div class="nav justify-content-end mt-1 mr-1">
             <p><small class="text-muted"><%= post.liked_users.count %> likes</small></p>
@@ -77,11 +155,11 @@
       </div>
     <% end %>
   </div>
+  <div class="nav justify-content-end mt-3">
+    <%= link_to 'もっと見る', all_time_ranking_path, class: 'text-secondary' %>
+  </div>
 </div>
 <!--end-->
 
 
-<!-- 投稿新規作成ボタン -->
-<div class='nav justify-content-end' style="position:fixed; bottom:25px; right:25px; z-index: 999;">
-  <%= link_to '+', new_post_url, class: 'btn btn-primary rounded-circle' %>
-</div>
+<%= render partial: 'shared/create_new_post_btn' %>

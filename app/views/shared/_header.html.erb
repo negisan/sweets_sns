@@ -4,7 +4,7 @@
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
       <li class="nav-item"><%= link_to current_user.name,
-              user_path(current_user), class: 'nav-link' %></li>
+              profile_show_user_path(current_user), class: 'nav-link' %></li>
       <li class="nav-item"><%= link_to 'ログアウト', sign_out_path, class: 'nav-link' %></li>
       <% else %>
         <li class="nav-item"><%= link_to 'サインアップ', new_user_registration_path, class: 'nav-link' %></li>

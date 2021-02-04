@@ -1,43 +1,47 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>ユーザー登録情報に関する設定</h2>
+<hr size="20" noshad>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+<%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+  <%= render "users/shared/error_messages", resource: @user %>
 
-  <div class="field">
+  <div class="form-group mt-5">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="form-group">
+    <%= f.label :password %> <strong>(パスワードを変更する必要のない場合空欄のままにしてください)</strong><br />
+
     <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <% m = '最小' + @minimum_password_length.to_s + '文字' %>
+    <% else %>
+     <% m = '' %>
     <% end %>
+
+    <%= f.password_field :password, autocomplete: "new-password",
+            class: 'form-control', placeholder: m %>
+
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  <div class="form-group mt-5">
+    <%= f.label :current_password %> <strong>(変更を確定するには現在のパスワードを入力する必要があります)</strong>
+    <hr size="10" noshad>
+    <%= f.password_field :current_password, autocomplete: "current-password",
+            class: 'form-control', placeholder: '現在のパスワードを入力してください' %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div class="nav justify-content-end mt-5">
+    <%= f.submit "更新する", class: 'btn btn-primary' %>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<%= link_to "戻る", :back, class: 'btn btn-secondary' %>

@@ -7,21 +7,66 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
 
 
   describe 'テンプレートの表示' do
+    describe 'header' do
+      it 'サインアップが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'サインアップ'
+      end
 
-    describe 'posts/show' do
-      it "showページにアクセスできる" do
+      it 'ログインが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'ログイン'
+      end
+
+      it 'ログアウトが表示されない' do
+        visit root_path
+        expect(page).to_not have_selector 'a', text: 'ログアウト'
+      end
+
+      it 'Homeへのリンクが表示される' do
+        visit root_path
+        expect(page).to have_selector 'a', text: 'Home'
+      end
+    end
+
+    describe '投稿詳細ページ' do
+      before do
         visit post_path(post)
+      end
+
+      it "showページにアクセスできる" do
         expect(page).to have_selector 'img[alt="sample.jpg"]'
       end
 
       it '編集リンクが表示されない' do
-        visit post_path(post)
         expect(page).to_not have_selector 'a', text: '編集'
       end
 
       it '削除リンクが表示されない' do
-        visit post_path(post)
         expect(page).to_not have_selector 'a', text: '削除'
+      end
+
+      it '投稿者のアバターが表示される' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
+    end
+
+    describe 'Home' do
+      before do
+        visit root_path
+      end
+
+      it '投稿にユーザーアバターが表示されている' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
+
+      it '投稿のユーザーアバターをクリックするとユーザー詳細ページにアクセスできる' do
+        first("#user_avatar").click
+        expect(page).to have_content "#{post.user.name}の投稿"
+      end
+
+      it '投稿にひとことが表示されていない' do
+        expect(page).to_not have_content post.body
       end
     end
   end
@@ -58,7 +103,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       end
     end
 
-    describe 'posts/show' do
+    describe '投稿詳細' do
       it "Likeボタンが表示される" do
         visit post_path(post)
         expect(page).to have_selector 'a', id: 'like_btn'
@@ -89,29 +134,27 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
 
   describe 'テンプレートの表示' do
-    describe "posts/new" do
-      it "newページへアクセスできる" do
+    describe "投稿の新規作成ページ" do
+      it "アクセスできる" do
         visit new_post_path
         expect(page).to have_content '投稿の新規作成'
       end
     end
 
-    describe "posts/show" do
-      it 'showページにアクセスできる' do
+    describe "投稿詳細ページ" do
+      before do
         visit post_path(post)
-        expect(page).to have_content '投稿詳細'
       end
 
       it "画像が表示される" do
-        visit post_path(post)
         expect(page).to have_selector 'img[alt="sample.jpg"]'
       end
 
-      context 'postを作成したユーザーとログインしているユーザーが一致' do
-        before do
-          visit post_path(post)
-        end
+      it '投稿者のアバターが表示される' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
 
+      context '投稿を作成したユーザーとログインしているユーザーが一致' do
         it '編集リンクが表示される' do
           expect(page).to have_selector 'a', text: '編集'
         end
@@ -121,7 +164,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         end
       end
 
-      context 'postを作成したユーザーとログインしているユーザーが違う' do
+      context '投稿を作成したユーザーとログインしているユーザーが違う' do
         before do
           sign_in user2
           visit post_path(post)
@@ -134,6 +177,26 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         it '削除リンクが表示されない' do
           expect(page).to_not have_selector 'a', text: '削除'
         end
+      end
+    end
+
+    describe 'Home' do
+      before do
+        sign_in user
+        visit root_path
+      end
+
+      it '投稿にユーザーアバターが表示されている' do
+        expect(page).to have_selector 'img[id="user_avatar"]'
+      end
+
+      it '投稿のユーザーアバターをクリックするとユーザー詳細ページにアクセスできる' do
+        first("#user_avatar").click
+        expect(page).to have_content "#{post.user.name}の投稿"
+      end
+
+      it '投稿にひとことが表示されていない' do
+        expect(page).to_not have_content post.body
       end
     end
   end
@@ -171,7 +234,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       end
     end
 
-    describe 'posts/edit' do
+    describe '投稿編集ページ' do
       before do
         visit edit_post_path(post)
       end
@@ -208,7 +271,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
 
   describe 'Like機能' do
-    describe 'posts/show' do
+    describe '投稿詳細ページ' do
       it "Likeボタンが表示される" do
         visit post_path(post)
         expect(page).to have_selector 'a', id: 'like_btn'
@@ -247,8 +310,8 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         find('#like_btn').click
         expect(find('#like_btn')).to have_css '.fas'
         sleep 1
-        find('.fas').click
-        expect(find('#like_btn')).to_not have_css '.fas'
+        find('#like_btn').click
+        expect(find('#like_btn')).to have_css '.far'
       end
     end
   end

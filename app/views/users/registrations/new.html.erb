@@ -1,7 +1,8 @@
 <h2>サインアップ</h2>
+<hr size="20" noshad>
 
 <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+  <%= render "users/shared/error_messages", resource: @user %>
   <div class="mt-5">
     <div class="form-group">
       <%= f.label :email %><br />
@@ -9,6 +10,11 @@
                     autofocus: true,
                     autocomplete: "email",
                     class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
 
     <div class="form-group">

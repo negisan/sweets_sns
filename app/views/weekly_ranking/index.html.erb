@@ -1,0 +1,30 @@
+<%= render partial: 'shared/ranking_link_bar' %>
+
+<div class="mt-5">
+  <h2>週間いいねランキング</h2>
+  <hr size="20" noshad>
+  <div class="card-deck">
+    <% @posts.each do |post| %>
+      <div class="mr-3 mb-3" style="display: flex; flex-wrap: wrap">
+        <div class="card mt-1" style="width: 12rem" id="<%= post.user.name + "の投稿" %>">
+          <% if post.image.attached? %>
+            <%= link_to post_path(post), target: "_blank" do %>
+              <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: post.image.filename %>
+            <% end %>
+          <% end %>
+
+          <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+
+          <div class="card-body">
+            <div id="likes_buttons_<%= post.id %>">
+              <%= render partial: 'likes/like', locals: {post: post} %>
+            </div>
+            <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= paginate @posts %>
+</div>
