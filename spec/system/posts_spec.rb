@@ -68,6 +68,65 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       it '投稿にひとことが表示されていない' do
         expect(page).to_not have_content post.body
       end
+
+      it '新着投稿一覧ページへのリンクがある' do
+        expect(page).to have_selector 'a[href="/posts"]'
+      end
+
+      it '週間いいねランキング一覧ページへのリンクがある' do
+        expect(page).to have_selector 'a[href="/weekly_ranking"]'
+      end
+
+      it '総合いいねランキング一覧ページへのリンクがある' do
+        expect(page).to have_selector 'a[href="/all_time_ranking"]'
+      end
+    end
+
+    describe '投稿一覧ページ' do
+      shared_examples_for '各一覧ページのリンクバーが表示されている' do
+        it {
+          expect(page).to have_css '#ranking_link_bar'
+          expect(page).to have_selector 'a[href="/posts"]'
+          expect(page).to have_selector 'a[href="/weekly_ranking"]'
+          expect(page).to have_selector 'a[href="/all_time_ranking"]'
+        }
+      end
+
+      describe '新着投稿一覧ページ' do
+        before do
+          visit posts_path
+        end
+
+        it 'アクセスできる' do
+          expect(page).to have_content '新着投稿一覧'
+        end
+
+        it_behaves_like '各一覧ページのリンクバーが表示されている'
+      end
+
+      describe '週間いいねランキングページ' do
+        before do
+          visit weekly_ranking_path
+        end
+
+        it "アクセスできる" do
+          expect(page).to have_content '週間いいねランキング'
+        end
+
+        it_behaves_like '各一覧ページのリンクバーが表示されている'
+      end
+
+      describe '総合いいねランキングページ' do
+        before do
+          visit all_time_ranking_path
+        end
+
+        it 'アクセスできる' do
+          expect(page).to have_content '総合いいねランキング'
+        end
+
+        it_behaves_like '各一覧ページのリンクバーが表示されている'
+      end
     end
   end
 
