@@ -50,11 +50,11 @@
       <ul class="list-group list-group-flush">
         <div>
           <div style="float: left;">
-            <%= link_to user_path(c.user_id) do %>
+            <%= link_to profile_show_user_path(c.user) do %>
               <%= image_tag c.user.avatar.variant(resize:"45x45^").processed,
                       class: 'user-avatar-trim-to-circle', style: 'width: 45px; height: 45px;' %>
             <% end %>
-            <%= link_to c.user.name, user_path(c.user_id), class: 'text-secondary ml-3' %>
+            <%= link_to c.user.name, profile_show_user_path(c.user), class: 'text-secondary ml-3' %>
           </div>
           <li class="list-group-item my-5" style="border: none;">
             <%= safe_join(c.content.split("\n"),tag(:br)) %>
