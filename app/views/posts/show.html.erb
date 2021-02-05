@@ -43,21 +43,36 @@
 
 
 <div class="card text-center p-5 mt-3">
-  <p>コメント欄</p>
+  <p class="text-muted">コメント</p>
+  <hr size="20px" noshad>
   <% @comments.each do |c| %>
     <div>
-      <%= link_to c.user.name, user_path(c.user_id) %>
-      <%= c.content %>
-      <hr>
+      <ul class="list-group list-group-flush">
+        <div>
+          <div style="float: left;">
+            <%= link_to user_path(c.user_id) do %>
+              <%= image_tag c.user.avatar.variant(resize:"45x45^").processed,
+                      class: 'user-avatar-trim-to-circle', style: 'width: 45px; height: 45px;' %>
+            <% end %>
+            <%= link_to c.user.name, user_path(c.user_id), class: 'text-secondary ml-3' %>
+          </div>
+          <li class="list-group-item my-5" style="border: none;">
+            <%= safe_join(c.content.split("\n"),tag(:br)) %>
+          </li>
+        </div>
+      </ul>
     </div>
   <% end %>
 
   <% if user_signed_in? %>
     <%= form_with model: [@post, @comment], local: true do |f| %>
-      <%= f.text_field :content %>
-      <%= f.hidden_field :post_id, value: @post.id %>
-      <br>
-      <%= f.submit 'コメントする' %>
+      <div class="form-group">
+        <%= f.text_area :content, placeholder: 'コメントを入力', class: 'form-control' %>
+        <%= f.hidden_field :post_id, value: @post.id %>
+        <div class="nav justify-content-end mt-3">
+          <%= f.submit 'コメントする', class: 'btn btn-light' %>
+        </div>
+      </div>
     <% end %>
   <% end %>
 </div>
