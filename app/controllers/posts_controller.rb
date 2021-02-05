@@ -14,7 +14,9 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   def show
     @like = Like.new
     @comments = @post.comments
-    @comment = current_user.comments.new
+    if user_signed_in?
+      @comment = current_user.comments.new
+    end
   end
 
   def create
