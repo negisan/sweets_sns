@@ -6,6 +6,7 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
 
 
 
+
   describe 'テンプレートの表示' do
     describe 'header' do
       it 'サインアップが表示される' do
@@ -175,6 +176,28 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       end
     end
   end
+
+
+
+  describe 'コメント機能' do
+    let!(:comment) { FactoryBot.create(:comment, user_id: user.id, post_id: post.id) }
+
+    before do
+      visit post_path(post)
+    end
+
+    it 'コメントが表示されている' do
+      expect(page).to have_css '#comment-item'
+    end
+
+    it 'コメントを投稿したユーザーが表示されている' do
+      expect(page).to have_css '#comment-user'
+    end
+
+    it 'コメント入力欄が表示されていない' do
+      expect(page).to_not have_selector 'div[id="comment-input-area"]'
+    end
+  end
 end
 
 
@@ -185,6 +208,7 @@ RSpec.describe 'ログインしているユーザー', type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
   let!(:post) { FactoryBot.create(:post, user_id: user.id) }
+
 
   before do
     sign_in user
@@ -372,6 +396,35 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         find('#like_btn').click
         expect(find('#like_btn')).to have_css '.far'
       end
+    end
+  end
+
+
+
+
+  describe 'コメント機能' do
+    let!(:comment) { FactoryBot.create(:comment, user_id: user.id, post_id: post.id) }
+
+    before do
+      visit post_path(post)
+    end
+
+    it 'コメントが表示されている' do
+      expect(page).to have_css '#comment-item'
+    end
+
+    it 'コメントを投稿したユーザーが表示されている' do
+      expect(page).to have_css '#comment-user'
+    end
+
+    it 'コメント入力欄が表示されている' do
+      expect(page).to have_selector 'div[id="comment-input-area"]'
+    end
+
+    it 'コメントを投稿できる' do
+      fill_in 'comment-input-form', with: 'コメントのテスト投稿'
+      click_button 'comment-submit-btn'
+      expect(page).to have_content 'コメントのテスト投稿'
     end
   end
 end
