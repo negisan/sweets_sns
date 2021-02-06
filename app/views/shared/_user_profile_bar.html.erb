@@ -2,8 +2,10 @@
 <div>
   <%= link_to  profile_show_user_path(post.user) do %>
     <div class="d-inline-block">
+    <% if post.user.avatar.attached? %>
       <%= image_tag post.user.avatar.variant(resize:"240x240").processed, class: 'user-avatar-trim-to-circle',
               style: "width: 25px; height: 25px;", id: 'user_avatar' %>
+    <% end %>
     </div>
     <div class="d-inline-block ml-3 text-secondary">
       <%= post.user.name %>
