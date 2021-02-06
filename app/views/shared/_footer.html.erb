@@ -1,7 +1,11 @@
 <footer>
-  <div class='card text-center'>
+  <div class='card text-left'>
     <div class="card-footer text-muted">
-      footer
+      <% if signed_in? && current_user.admin? %>
+        <div>
+          <%= link_to '管理人ページ', admin_users_path, class: 'text-secondary' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </footer>
