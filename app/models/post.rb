@@ -7,5 +7,5 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   validates :image, presence: true, blob: {content_type: :image}
-  validates :body, length: {maximum: 200}
+  validates :body, length: {in: 1..300}
 end

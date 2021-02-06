@@ -25,7 +25,9 @@ before_action :user_prohibition?, only: [:new, :create, :edit, :update, :destroy
     if @post.save
       redirect_to root_url, flash: {notice: "投稿しました"}
     else
-      render :new
+      #renderだとview側の設計の問題でActiveStorageFileNotFoudErrorに引っかかるため暫定対応
+      flash[:alert] = '保存に失敗しました'
+      redirect_back(fallback_location: root_url)
     end
   end
 
