@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'users', to: 'user#index'
+    post 'user/:id/prohibition', to: 'user#update'
+    delete 'user/:id/prohibition', to: 'user#destroy'
   end
+
   get 'weekly_ranking', to: 'weekly_ranking#index'
   get 'all_time_ranking', to: 'all_time_ranking#index'
   resources :posts do

@@ -1,22 +1,41 @@
-<h1>Admin::User#index</h1>
-<p>Find me in app/views/admin/user/index.html.erb</p>
+<h2>ユーザー管理画面</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>user_name</th>
-      <th>email</th>
-      <th>prohibition</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
+<div class="mt-5">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td></td>
+        <th>user_name</th>
+        <th>email</th>
+        <th>投稿制限</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate(@users) %>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <% if user.prohibition? %>
+              <strong class="text-danger">
+                <%= user.prohibition %>
+              </strong>
+            <% else %>
+              <%= user.prohibition %>
+            <% end %>
+          </td>
+          <td>
+            <% if user.prohibition? %>
+              <%= link_to '投稿制限の解除', admin_path(user.id), method: :delete,
+                        class: 'btn btn-outline-success' %>
+            <% else %>
+              <%= link_to '投稿制限の付与', admin_path(user.id), method: :post,
+                        class: 'btn btn-outline-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate(@users) %>
+</div>
