@@ -361,6 +361,36 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         expect(page).to have_content '投稿を削除しました'
       end
     end
+
+    describe '投稿制限がかかっている' do
+      let(:user) { FactoryBot.create(:user, prohibition: true) }
+
+      it '新規投稿ページへアクセスできない' do
+        visit new_post_path
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it '投稿の編集ができない' do
+        visit post_path(post)
+        click_on '編集'
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it '投稿の削除ができない' do
+        visit post_path(post)
+        page.accept_confirm do
+          click_on '削除'
+        end
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it 'コメントができない' do
+        visit post_path(post)
+        fill_in 'comment-input-form', with: 'コメントのテスト'
+        click_on 'comment-submit-btn'
+        expect(page).to have_content '機能が制限されています'
+      end
+    end
   end
 
 
