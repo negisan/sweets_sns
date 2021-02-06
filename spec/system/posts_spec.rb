@@ -302,18 +302,18 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         expect(page).to have_content '投稿しました'
       end
 
-      it 'ひとことが空で投稿できる' do
+      it 'ひとことが空で投稿できない' do
         page.attach_file('spec/fixtures/sample.jpg') do
           page.find('.custom-file').click
         end
         click_button '送信'
-        expect(page).to have_content '投稿しました'
+        expect(page).to_not have_content '投稿しました'
       end
 
       it '画像が空だと投稿できない' do
         fill_in 'ひとこと', with: 'test'
         click_button '送信'
-        expect(page).to have_content 'Imageを入力してください'
+        expect(page).to_not have_content '投稿しました'
       end
     end
 

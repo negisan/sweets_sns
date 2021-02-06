@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-before_action :set_post, only: [:show, :edit, :update, :destroy]
+before_action :set_post, only: [:edit, :update, :destroy]
 before_action :user_prohibition?, only: [:new, :create, :edit, :update, :destroy]
 
   def index
@@ -13,6 +13,7 @@ before_action :user_prohibition?, only: [:new, :create, :edit, :update, :destroy
   end
 
   def show
+    @post = Post.find(params[:id])
     @like = Like.new
     @comments = @post.comments
     if user_signed_in?
@@ -49,7 +50,11 @@ before_action :user_prohibition?, only: [:new, :create, :edit, :update, :destroy
 
   private
     def set_post
-      @post = Post.find_by(id: params[:id])
+      if current_user.admin?
+        @post = Post.find(params[:id])
+      else
+        @post = current_user.posts.find_by(id: params[:id])
+      end
     end
 
     def post_params
