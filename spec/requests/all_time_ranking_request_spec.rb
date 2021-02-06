@@ -4,7 +4,7 @@ RSpec.describe "AllTimeRankings", type: :request do
 
   describe "GET /index" do
     it "returns http success" do
-      get "/all_time_ranking/index"
+      get "/all_time_ranking"
       expect(response).to have_http_status(:success)
     end
   end

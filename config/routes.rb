@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'all_time_ranking', to: 'all_time_ranking#index'
   resources :posts do
     resources :likes, only: [:create, :destroy]
+    resources :comments, only: [:create]
   end
 
   devise_for :users, :controllers => {
