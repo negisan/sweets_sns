@@ -1,2 +1,22 @@
 <h1>Admin::User#index</h1>
 <p>Find me in app/views/admin/user/index.html.erb</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>user_name</th>
+      <th>email</th>
+      <th>prohibition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate(@users) %>
