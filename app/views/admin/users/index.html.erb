@@ -26,10 +26,10 @@
           </td>
           <td>
             <% if user.prohibition? %>
-              <%= link_to '投稿制限の解除', admin_path(user.id), method: :delete,
+              <%= link_to '投稿制限の解除', admin_user_prohibition_path(user), method: :delete,
                         class: 'btn btn-outline-success' %>
             <% else %>
-              <%= link_to '投稿制限の付与', admin_path(user.id), method: :post,
+              <%= link_to '投稿制限の付与', admin_user_prohibition_path(user), method: :post,
                         class: 'btn btn-outline-danger' %>
             <% end %>
           </td>

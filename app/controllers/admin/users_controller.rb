@@ -1,4 +1,4 @@
-class Admin::UserController < ApplicationController
+class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_admin?
 
@@ -7,14 +7,14 @@ class Admin::UserController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
+    user = User.find(params[:user_id])
     if user.update(prohibition: true)
       redirect_back(fallback_location: admin_users_path)
     end
   end
 
   def destroy
-    user = User.find(params[:id])
+    user = User.find(params[:user_id])
     if user.update(prohibition: false)
       redirect_back(fallback_location: admin_users_path)
     end
