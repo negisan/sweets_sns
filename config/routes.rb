@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-    get 'user/index'
+    get 'users', to: 'user#index'
   end
   get 'weekly_ranking', to: 'weekly_ranking#index'
   get 'all_time_ranking', to: 'all_time_ranking#index'
