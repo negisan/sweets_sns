@@ -12,12 +12,17 @@
               class: 'nav-link text-danger', data: { confirm: '本当に削除してもよろしいですか？' } %>
         </li>
       </ul>
+    <% elsif user_signed_in? && current_user.admin? %>
+        <div class="nav-item">
+          <%= link_to '管理人権限で削除', post_path(@post), method: :delete,
+              class: 'nav-link text-danger', data: { confirm: '管理ユーザーさん、本当に削除しても大丈夫な投稿ですか？' } %>
+        </div>
     <% end %>
   </div>
   <div class="card-body px-5">
     <% if @post.body %>
       <div class="my-5">
-        <p class="card-text"><%= simple_format(@post.body) %></p>
+        <p class="card-text"><%= safe_join(@post.body.split("\n"),tag(:br)) %></p>
         <hr size="20" noshad>
       </div>
     <% end %>

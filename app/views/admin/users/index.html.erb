@@ -13,7 +13,9 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= user.name %></td>
+          <td>
+            <%= link_to user.name, admin_user_path(user), class: 'text-secondary' %>
+          </td>
           <td><%= user.email %></td>
           <td>
             <% if user.prohibition? %>
