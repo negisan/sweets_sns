@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :user_prohibition?
+
   def create
     @comment = current_user.comments.new(comment_params)
 

@@ -302,18 +302,18 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         expect(page).to have_content '投稿しました'
       end
 
-      it 'ひとことが空で投稿できる' do
+      it 'ひとことが空で投稿できない' do
         page.attach_file('spec/fixtures/sample.jpg') do
           page.find('.custom-file').click
         end
         click_button '送信'
-        expect(page).to have_content '投稿しました'
+        expect(page).to_not have_content '投稿しました'
       end
 
       it '画像が空だと投稿できない' do
         fill_in 'ひとこと', with: 'test'
         click_button '送信'
-        expect(page).to have_content 'Imageを入力してください'
+        expect(page).to_not have_content '投稿しました'
       end
     end
 
@@ -346,6 +346,49 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       it '取消ボタンで画像を除去できる' do
         click_button '取消'
         expect(page).to_not have_selector 'image[title="image"]'
+      end
+    end
+
+    describe '投稿詳細ページ' do
+      before do
+        visit post_path(post)
+      end
+
+      it '投稿が削除できる' do
+        page.accept_confirm do
+          click_on '削除'
+        end
+        expect(page).to have_content '投稿を削除しました'
+      end
+    end
+
+    describe '投稿制限がかかっている' do
+      let(:user) { FactoryBot.create(:user, prohibition: true) }
+
+      it '新規投稿ページへアクセスできない' do
+        visit new_post_path
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it '投稿の編集ができない' do
+        visit post_path(post)
+        click_on '編集'
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it '投稿の削除ができない' do
+        visit post_path(post)
+        page.accept_confirm do
+          click_on '削除'
+        end
+        expect(page).to have_content '機能が制限されています'
+      end
+
+      it 'コメントができない' do
+        visit post_path(post)
+        fill_in 'comment-input-form', with: 'コメントのテスト'
+        click_on 'comment-submit-btn'
+        expect(page).to have_content '機能が制限されています'
       end
     end
   end

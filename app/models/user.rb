@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  require 'faker'
+
   before_create :set_default_user_avatar
 
   # Include default devise modules. Others available are:
@@ -10,7 +12,17 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_posts, :through => :likes, :source => :post
-  has_many :comments
+  has_many :comments, dependent: :destroy
+
+
+  def self.guest
+    int = rand(100) + 1
+    User.create!(
+      email: "guest#{int}@example.com",
+      password: 'password',
+      introduction: Faker::Movies::HarryPotter.quote
+    )
+  end
 
   def already_liked?(post)
     self.likes.exists?(post_id: post.id)
