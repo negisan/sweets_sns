@@ -348,6 +348,19 @@ RSpec.describe 'ログインしているユーザー', type: :system do
         expect(page).to_not have_selector 'image[title="image"]'
       end
     end
+
+    describe '投稿詳細ページ' do
+      before do
+        visit post_path(post)
+      end
+
+      it '投稿が削除できる' do
+        page.accept_confirm do
+          click_on '削除'
+        end
+        expect(page).to have_content '投稿を削除しました'
+      end
+    end
   end
 
 
