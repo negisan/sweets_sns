@@ -79,6 +79,13 @@ RSpec.describe 'サインアップ', type: :system do
     click_button 'サインアップ'
     expect(page).to have_link 'テストユーザー'
   end
+
+  it 'かんたんログインができる' do
+    visit root_path
+    expect {
+      click_on 'かんたんログイン'
+    }.to change{User.count}.by(1)
+  end
 end
 
 
