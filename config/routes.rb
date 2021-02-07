@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'users/sessions#new_guest'
   end
 
+
   resources :users do
     member do
       get 'profile/show', to: 'users/profile#show'
@@ -33,6 +34,8 @@ Rails.application.routes.draw do
       patch 'profile/update', to: 'users/profile#update'
     end
   end
+
+  resources :follow_relationships, only: [:create, :destroy]
 
   root to: 'home#index'
 end

@@ -7,10 +7,18 @@
           <div class="nav justify-content-center mt-3">
             <%= link_to 'ユーザー情報の編集', profile_edit_user_path, class: 'btn btn-light'  %>
           </div>
+        <% elsif user_signed_in? %>
+          <div class="nav justify-content-center mt-3">
+            <%= render partial: 'follow_btn', locals: {user: @user} %>
+          </div>
         <% end %>
       <% end %>
     </div>
   </div>
+</div>
+<div class="nav justify-content-center mt-5">
+  <i class="text-muted mr-1">フォロー: <%= @user.followings.size %></i>
+  <i class="text-muted">フォロワー: <%= @user.follower.size %></i>
 </div>
 
 <div class="nav justify-content-center mt-5">
