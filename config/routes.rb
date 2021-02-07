@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       get 'profile/edit', to: 'users/profile#edit'
       patch 'profile/update', to: 'users/profile#update'
     end
+
+    member do
+      get :followings, :follower
+    end
   end
 
   resources :follow_relationships, only: [:create, :destroy]

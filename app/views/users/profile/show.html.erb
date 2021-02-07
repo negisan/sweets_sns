@@ -17,8 +17,8 @@
   </div>
 </div>
 <div class="nav justify-content-center mt-5">
-  <i class="text-muted mr-1">フォロー: <%= @user.followings.size %></i>
-  <i class="text-muted">フォロワー: <%= @user.follower.size %></i>
+  <i class="mr-3"><%= link_to  "フォロー: #{@user.followings.size}", followings_user_path(@user), class: 'text-muted' %></i>
+  <i><%= link_to "フォロワー: #{@user.follower.size}", follower_user_path(@user), class: 'text-muted' %></i>
 </div>
 
 <div class="nav justify-content-center mt-5">
