@@ -10,13 +10,13 @@
                       class: 'user-avatar-trim-to-circle', id: 'user_avatar', title: user.avatar.filename %>
           <% end %>
           <div class="mt-1">
-            <%= link_to user.name, profile_show_user_path(user), class: 'text-secondary' %>
+            <%= link_to user.name, profile_show_user_path(user), class: 'text-secondary', id: 'follower_name' %>
           </div>
         </div>
 
         <% user.posts.first(3).each do |post| %>
           <div style="display: flex; flex-wrap: wrap">
-            <div class="card" style="width: 13rem">
+            <div class="card" style="width: 13rem" id="user_post">
               <% if post.image.attached? %>
                 <%= link_to post_path(post), target: "_blank" do %>
                   <%= image_tag post.image.variant(gravity: :center, resize:"240x240^", crop:"240x240+0+0").processed,

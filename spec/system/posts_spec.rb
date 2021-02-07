@@ -378,10 +378,11 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
       it '投稿の削除ができない' do
         visit post_path(post)
-        page.accept_confirm do
-          click_on '削除'
-        end
-        expect(page).to have_content '機能が制限されています'
+        expect{
+          page.accept_confirm do
+            click_on '削除'
+          end
+        }.to_not change{Post.count}
       end
 
       it 'コメントができない' do

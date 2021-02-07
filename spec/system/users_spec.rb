@@ -122,6 +122,68 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       expect(page).to have_content 'this is introduction'
     end
   end
+
+  describe 'フォロー関連' do
+    it 'フォロワー一覧へアクセスできる' do
+      visit profile_show_user_path(user)
+      click_on 'following-size'
+      expect(page).to have_content 'さんのフォローしているユーザー'
+    end
+
+    it 'フォロー一覧ページへアクセスできる' do
+      visit profile_show_user_path(user)
+      click_on 'follower-size'
+      expect(page).to have_content 'さんをフォローしているユーザー'
+    end
+
+    describe '一覧ページの表示' do
+      let!(:user2) {create(:user)}
+      let!(:user3) {create(:user)}
+      let!(:post_by_user2) {create(:post, user_id: user2.id)}
+      let!(:post_by_user3) {create(:post, user_id: user3.id)}
+
+      before do
+        #user3がuser2をフォローしている
+        FactoryBot.create(:follow_relationship, following_id: user2.id, follower_id: user3.id)
+      end
+      describe 'フォロワー一覧ページ' do
+        before do
+          visit follower_user_path(user2)
+        end
+
+        it 'フォロワーの名前が表示される' do
+          expect(page).to have_selector 'a[id="follower_name"]'
+        end
+
+        it 'フォロワーのアバターが表示される' do
+          expect(page).to have_selector 'img[id="user_avatar"]'
+        end
+
+        it 'フォロワーの投稿が表示される' do
+          expect(page).to have_css '#user_post'
+        end
+      end
+
+      describe 'フォロー一覧ページ' do
+        before do
+          visit followings_user_path(user3)
+        end
+
+        it 'フォローユーザーの名前が表示される' do
+          expect(page).to have_selector 'a[id="following_user_name"]'
+        end
+
+        it 'フォローユーザーのアバターが表示される' do
+          expect(page).to have_selector 'img[id="user_avatar"]'
+        end
+
+        it 'フォローユーザーの投稿が表示される' do
+          expect(page).to have_css '#user_post'
+        end
+      end
+    end
+
+  end
 end
 
 
@@ -232,6 +294,89 @@ RSpec.describe 'ログインしているユーザー', type: :system do
       click_on '更新する'
       expect(page).to have_content '現在のパスワードを入力してください'
     end
+  end
+
+  describe 'フォロー関連' do
+    it 'フォロワー一覧へアクセスできる' do
+      visit profile_show_user_path(user)
+      click_on 'following-size'
+      expect(page).to have_content 'さんのフォローしているユーザー'
+    end
+
+    it 'フォロー一覧ページへアクセスできる' do
+      visit profile_show_user_path(user)
+      click_on 'follower-size'
+      expect(page).to have_content 'さんをフォローしているユーザー'
+    end
+
+    describe '一覧ページの表示' do
+      let!(:user2) {create(:user)}
+      let!(:user3) {create(:user)}
+      let!(:post_by_user2) {create(:post, user_id: user2.id)}
+      let!(:post_by_user3) {create(:post, user_id: user3.id)}
+
+      before do
+        #user3がuser2をフォローしている
+        FactoryBot.create(:follow_relationship, following_id: user2.id, follower_id: user3.id)
+      end
+      describe 'フォロワー一覧ページ' do
+        before do
+          visit follower_user_path(user2)
+        end
+
+        it 'フォロワーの名前が表示される' do
+          expect(page).to have_selector 'a[id="follower_name"]'
+        end
+
+        it 'フォロワーのアバターが表示される' do
+          expect(page).to have_selector 'img[id="user_avatar"]'
+        end
+
+        it 'フォロワーの投稿が表示される' do
+          expect(page).to have_css '#user_post'
+        end
+      end
+
+      describe 'フォロー一覧ページ' do
+        before do
+          visit followings_user_path(user3)
+        end
+
+        it 'フォローユーザーの名前が表示される' do
+          expect(page).to have_selector 'a[id="following_user_name"]'
+        end
+
+        it 'フォローユーザーのアバターが表示される' do
+          expect(page).to have_selector 'img[id="user_avatar"]'
+        end
+
+        it 'フォローユーザーの投稿が表示される' do
+          expect(page).to have_css '#user_post'
+        end
+      end
+    end
+
+    describe 'フォロー機能' do
+      let!(:user2) {create(:user)}
+      before do
+        visit profile_show_user_path(user2)
+      end
+
+      it 'フォロー人数が表示される' do
+        expect(page).to have_selector 'a[id="following-size"]'
+      end
+
+      it 'フォロワー人数が表示される' do
+        expect(page).to have_selector 'a[id="follower-size"]'
+      end
+
+      it 'フォローできる' do
+        expect{
+          click_on 'フォローする'
+        }.to change{FollowRelationship.count}.by(1)
+      end
+    end
+
   end
 end
 
