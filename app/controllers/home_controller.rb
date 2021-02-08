@@ -21,5 +21,9 @@ class HomeController < ApplicationController
     #ファミマ
     from_famima = agent.get("https://www.family.co.jp/goods/dessert.html")
     @famima_new_items = from_famima.search('div.ly-list-goods .ly-mod-layout-clm a').first(4)
+
+    if user_signed_in?
+      @followings_new_posts = Post.where(user_id: current_user.following_ids).order(created_at: :desc).limit(4)
+    end
   end
 end

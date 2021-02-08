@@ -66,8 +66,39 @@
   <h2>みんなのおすすめ</h2>
 </div>
 
+<!-- フォロー新着 -->
+<% if user_signed_in? %>
+  <div id="new_posts">
+    <h3>フォロー新着</h3>
+    <hr size="20" noshad>
+    <div class="card-deck">
+      <% @followings_new_posts.each do |post| %>
+        <div class="card">
+          <% if post.image.attached? %>
+            <%= link_to post_path(post), target: "_blank" do %>
+              <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+            <% end %>
+          <% end %>
+
+          <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+
+          <div class="card-body">
+            <div id="likes_buttons_<%= post.id %>">
+              <%= render partial: 'likes/like', locals: {post: post} %>
+            </div>
+            <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<!--end-->
+
+
 <!-- 新着投稿 -->
-<div id="new_posts">
+<div id="new_posts" class="mt-5">
   <h3>新着投稿</h3>
   <hr size="20" noshad>
   <div class="card-deck">
