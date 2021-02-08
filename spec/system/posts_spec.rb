@@ -81,6 +81,10 @@ RSpec.describe 'ログインしていないユーザー', type: :system do
       it '総合いいねランキング一覧ページへのリンクがある' do
         expect(page).to have_selector 'a[href="/all_time_ranking"]'
       end
+
+      it 'フォローユーザーの新着が表示されていない' do
+        expect(page).to_not have_css '#followings_new_posts'
+      end
     end
 
     describe '投稿一覧ページ' do
@@ -280,6 +284,10 @@ RSpec.describe 'ログインしているユーザー', type: :system do
 
       it '投稿にひとことが表示されていない' do
         expect(page).to_not have_content post.body
+      end
+
+      it 'フォロー新着バーが表示されている' do
+        expect(page).to have_css '#followings_new_posts'
       end
     end
   end

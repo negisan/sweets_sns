@@ -68,26 +68,28 @@
 
 <!-- フォロー新着 -->
 <% if user_signed_in? %>
-  <div id="new_posts">
+  <div id="followings_new_posts">
     <h3>フォロー新着</h3>
     <hr size="20" noshad>
     <div class="card-deck">
       <% @followings_new_posts.each do |post| %>
-        <div class="card">
-          <% if post.image.attached? %>
-            <%= link_to post_path(post), target: "_blank" do %>
-              <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
-                      class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+        <div style="display: flex; flex-wrap: wrap">
+          <div class="card" style="width: 12rem;">
+            <% if post.image.attached? %>
+              <%= link_to post_path(post), target: "_blank" do %>
+                <%= image_tag post.image.variant(gravity: :center, resize:"480x480^", crop:"480x480+0+0").processed,
+                        class: 'card-img-top', style: 'width: 100%; height: auto', id: 'following_new_post' %>
+              <% end %>
             <% end %>
-          <% end %>
 
-          <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
+            <%= render partial: 'shared/user_profile_bar', locals: {post: post} %>
 
-          <div class="card-body">
-            <div id="likes_buttons_<%= post.id %>">
-              <%= render partial: 'likes/like', locals: {post: post} %>
+            <div class="card-body">
+              <div id="likes_buttons_<%= post.id %>">
+                <%= render partial: 'likes/like', locals: {post: post} %>
+              </div>
+              <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
             </div>
-            <p class="card-text"><small class="text-muted">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
           </div>
         </div>
       <% end %>
