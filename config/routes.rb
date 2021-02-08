@@ -26,13 +26,20 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'users/sessions#new_guest'
   end
 
+
   resources :users do
     member do
       get 'profile/show', to: 'users/profile#show'
       get 'profile/edit', to: 'users/profile#edit'
       patch 'profile/update', to: 'users/profile#update'
     end
+
+    member do
+      get :followings, :follower
+    end
   end
+
+  resources :follow_relationships, only: [:create, :destroy]
 
   root to: 'home#index'
 end

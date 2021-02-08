@@ -1,6 +1,13 @@
 class UsersController < ApplicationController
-  def show
+
+  def followings
     @user = User.find(params[:id])
-    @posts = @user.posts.page(params[:page]).per(12).order(created_at: :desc)
+    @users = @user.followings.page(params[:page]).per(5)
   end
+
+  def follower
+    @user = User.find(params[:id])
+    @users = @user.follower.page(params[:page]).per(5)
+  end
+
 end

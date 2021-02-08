@@ -1,0 +1,34 @@
+<h2><%= @user.name %> さんをフォローしているユーザー</h2>
+
+<div>
+  <% @users.each do |user| %>
+    <div id="user_bar">
+      <div class="card-deck my-5">
+        <div style="display: flex; align-items: center; margin-right: 40px; flex-direction: column;">
+          <%= link_to profile_show_user_path(user) do %>
+            <%= image_tag user.avatar.variant(resize: "240x240").processed,
+                      class: 'user-avatar-trim-to-circle', id: 'user_avatar', title: user.avatar.filename %>
+          <% end %>
+          <div class="mt-1">
+            <%= link_to user.name, profile_show_user_path(user), class: 'text-secondary', id: 'follower_name' %>
+          </div>
+        </div>
+
+        <% user.posts.first(3).each do |post| %>
+          <div style="display: flex; flex-wrap: wrap">
+            <div class="card" style="width: 13rem" id="user_post">
+              <% if post.image.attached? %>
+                <%= link_to post_path(post), target: "_blank" do %>
+                  <%= image_tag post.image.variant(gravity: :center, resize:"240x240^", crop:"240x240+0+0").processed,
+                          class: 'card-img-top', style: 'width: 100%; height: auto', alt: '' %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <hr size="20" noshad>
+    </div>
+  <% end %>
+  <%= paginate @users %>
+</div>
