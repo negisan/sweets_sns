@@ -11,6 +11,7 @@ require 'faker'
   User.find_or_create_by(email: "test#{i+1}@example.com") do |user|
     user.name = Faker::Name.name
     user.password = "password"
+    user.admin = true
     user.introduction = Faker::JapaneseMedia::StudioGhibli.quote
     user.avatar.attach(io: File.open(Rails.root.join("app/assets/images/user_avatar#{i+1}.jpg")),
     filename: 'sample_user_avatar')
